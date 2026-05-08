@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudioLive | Executive Command Center for Creative Agencies</title>
+    <meta name="description" content="StudioLive streamlines the entire studio pipeline from lead capture to final production delivery. Premium management for photography and videography agencies." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="glass" id="main-nav">
+      <div class="container nav-content">
+        <div class="logo">
+          <span class="logo-studio">STUDIO</span><span class="logo-live">LIVE</span>
+        </div>
+        <div class="nav-links">
+          <a href="#workflow">Workflow</a>
+          <a href="#benefits">Benefits</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#" class="btn-primary" id="cta-nav">Get Started</a>
+        </div>
+        <button class="mobile-toggle" id="mobile-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section" id="home">
+        <div class="pulse-bg" style="top: -10%; right: -10%; width: 500px; height: 500px; background: rgba(255, 0, 0, 0.15);"></div>
+        <div class="pulse-bg" style="bottom: 10%; left: -5%; width: 400px; height: 400px; background: rgba(255, 255, 255, 0.05);"></div>
+        
+        <div class="container hero-grid">
+          <div class="hero-text reveal">
+            <div class="badge" style="background: rgba(255, 0, 0, 0.1); color: var(--accent-red); border-color: rgba(255, 0, 0, 0.2);">V1.0.4 OUT NOW</div>
+            <h1>The <span class="logo-studio">EXECUTIVE</span> Command Center for Modern Studios</h1>
+            <p>StudioLive streamlines your entire pipeline—from the first lead to the final delivery. Built for agencies that demand high-fidelity operations.</p>
+            <div class="hero-btns">
+              <a href="#" class="btn-primary">Launch Dashboard <i data-lucide="arrow-right"></i></a>
+              <a href="#workflow" class="btn-outline">Watch Workflow</a>
+            </div>
+          </div>
+          <div class="hero-visual reveal">
+            <div class="mockup-container glass">
+              <img src="/hero-mockup.png" alt="StudioLive Dashboard Preview" id="hero-img">
+              <div class="floating-card glass top-right">
+                <i data-lucide="trending-up" style="color: var(--accent-red)"></i>
+                <div>
+                  <span class="label">Daily Revenue</span>
+                  <span class="val">$12,450</span>
+                </div>
+              </div>
+              <div class="floating-card glass bottom-left">
+                <i data-lucide="users" style="color: var(--accent-white)"></i>
+                <div>
+                  <span class="label">Active Leads</span>
+                  <span class="val">142</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workflow Section -->
+      <section class="section-padding" id="workflow">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="gradient-text">The Studio Pipeline</h2>
+            <p>A seamless, high-fidelity process designed for scale.</p>
+          </div>
+          
+          <div class="workflow-steps">
+            <div class="step-card reveal">
+              <div class="step-icon" style="background: var(--accent-red)"><i data-lucide="target"></i></div>
+              <h3>Capture</h3>
+              <p>Premium funnels and lead intake forms designed to convert high-value clients.</p>
+            </div>
+            <div class="step-arrow"><i data-lucide="chevron-right"></i></div>
+            <div class="step-card reveal">
+              <div class="step-icon" style="background: var(--accent-red)"><i data-lucide="check-square"></i></div>
+              <h3>Qualify</h3>
+              <p>Receptionist triage ensures every inquiry is matched with the right resources.</p>
+            </div>
+            <div class="step-arrow"><i data-lucide="chevron-right"></i></div>
+            <div class="step-card reveal">
+              <div class="step-icon" style="background: var(--accent-red)"><i data-lucide="user-plus"></i></div>
+              <h3>Assign</h3>
+              <p>Smart distribution to your best-fit Videographers and Editors.</p>
+            </div>
+            <div class="step-arrow"><i data-lucide="chevron-right"></i></div>
+            <div class="step-card reveal">
+              <div class="step-icon" style="background: var(--accent-red)"><i data-lucide="play-circle"></i></div>
+              <h3>Produce</h3>
+              <p>Real-time tracking of shoots, edits, and revisions in one command center.</p>
+            </div>
+            <div class="step-arrow"><i data-lucide="chevron-right"></i></div>
+            <div class="step-card reveal">
+              <div class="step-icon" style="background: var(--accent-red)"><i data-lucide="send"></i></div>
+              <h3>Deliver</h3>
+              <p>Automated, secure asset handover that wows your clients.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits Section -->
+      <section class="section-padding glass-bg" id="benefits">
+        <div class="container">
+          <div class="benefits-grid">
+            <div class="benefits-text reveal">
+              <h2 class="gradient-text">Built for Growth</h2>
+              <p>StudioLive isn't just a CRM. It's an OS for your creative agency.</p>
+              
+              <div class="benefit-item">
+                <div class="benefit-icon" style="color: var(--accent-red)"><i data-lucide="eye"></i></div>
+                <div>
+                  <h4>Executive Oversight</h4>
+                  <p>Track top-line revenue, conversion rates, and staff performance in real-time.</p>
+                </div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon" style="color: var(--accent-red)"><i data-lucide="shield"></i></div>
+                <div>
+                  <h4>Role-Based Precision</h4>
+                  <p>Tailored interfaces for Managers, Marketing, Reception, and Production teams.</p>
+                </div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon" style="color: var(--accent-red)"><i data-lucide="zap"></i></div>
+                <div>
+                  <h4>Automated ROI</h4>
+                  <p>Reduce operational friction and focus your energy on what matters: the art.</p>
+                </div>
+              </div>
+            </div>
+            <div class="benefits-visual reveal">
+              <img src="/benefits-preview.png" alt="Role-based dashboard preview" class="rounded-img" id="benefits-img">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Roadmap Section -->
+      <section class="section-padding" id="roadmap">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="gradient-text">Upcoming Updates</h2>
+            <p>We're constantly evolving to keep your studio ahead of the curve.</p>
+          </div>
+          
+          <div class="roadmap-grid">
+            <div class="roadmap-card reveal">
+              <div class="roadmap-tag">Q3 2026</div>
+              <h3>AI Lead Scoring</h3>
+              <p>Predictive analytics to prioritize leads based on historical conversion data and project value.</p>
+            </div>
+            <div class="roadmap-card reveal">
+              <div class="roadmap-tag">Q4 2026</div>
+              <h3>Client Collab Portal</h3>
+              <p>Interactive feedback environment where clients can comment directly on video timestamps.</p>
+            </div>
+            <div class="roadmap-card reveal">
+              <div class="roadmap-tag">Q1 2027</div>
+              <h3>Studio Cloud Sync</h3>
+              <p>Direct integration with Frame.io and Adobe Creative Cloud for seamless asset ingestion.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="section-padding">
+        <div class="container">
+          <div class="cta-box glass reveal">
+            <h2>Ready to Upgrade Your <span class="gradient-text">Studio OS</span>?</h2>
+            <p>Join 500+ creative agencies scaling with StudioLive.</p>
+            <a href="#" class="btn-primary">Book a Demo <i data-lucide="calendar"></i></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="glass">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <span class="logo-studio">STUDIO</span><span class="logo-live">LIVE</span>
+          </div>          <p>The standard for creative agency management.</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <h5>Product</h5>
+            <a href="#">Features</a>
+            <a href="#">Roadmap</a>
+            <a href="#">Pricing</a>
+          </div>
+          <div>
+            <h5>Company</h5>
+            <a href="#">About</a>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+          </div>
+          <div>
+            <h5>Legal</h5>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 StudioLive. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+    <script>
+      // Initialize icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
