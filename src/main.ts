@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      const targetId = anchor.getAttribute('href');
+      if (targetId === '#' || !targetId) return;
       
-      const target = document.querySelector(targetId);
+      const target = document.querySelector(targetId) as HTMLElement;
       if (target) {
         window.scrollTo({
           top: target.offsetTop - 80,
