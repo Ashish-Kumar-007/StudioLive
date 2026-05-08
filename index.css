@@ -574,9 +574,33 @@ footer {
   .footer-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 768px) {
-  .hero-text h1 { font-size: 2.8rem; }
-  .nav-links { display: none; }
-  .mobile-toggle { display: block; }
+/* Value Section */
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
 }
+
+.value-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.value-card i {
+  color: var(--accent-red);
+}
+
+.value-card span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+  .value-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 
