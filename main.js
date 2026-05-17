@@ -219,12 +219,12 @@ let activePageId = 'home';
 let isTransitioning = false;
 
 function initAperture() {
-  // Reveal the initial home page smoothly on load by sweeping aperture to 150%
+  // Reveal the initial home page smoothly on load by sweeping aperture to 0%
   const aperture = document.querySelector('.aperture-overlay');
   if (aperture) {
-    const radiusObj = { value: 0 };
+    const radiusObj = { value: 150 };
     gsap.to(radiusObj, {
-      value: 150,
+      value: 0,
       duration: 1.5,
       ease: 'power3.inOut',
       onUpdate: () => {
@@ -247,9 +247,9 @@ function handlePageTransition(targetPageId) {
   // Close Lenis wheel and lock scroll during camera swap
   lenis.stop();
 
-  const radiusObj = { value: 150 };
+  const radiusObj = { value: 0 };
 
-  // 1. Sweep camera shutter aperture closed (circle radius 0%)
+  // 1. Sweep camera shutter aperture closed (circle radius 150%)
   const tl = gsap.timeline({
     onComplete: () => {
       // 2. Perform Virtual page panel display update inside the dark shutter cover
@@ -287,9 +287,9 @@ function handlePageTransition(targetPageId) {
       
       // Delay opening lens shutter to sync with smooth WebGL camera orbit glide
       setTimeout(() => {
-        const reopenObj = { value: 0 };
+        const reopenObj = { value: 150 };
         gsap.to(reopenObj, {
-          value: 150,
+          value: 0,
           duration: 1.4,
           ease: 'power3.inOut',
           onUpdate: () => {
@@ -308,7 +308,7 @@ function handlePageTransition(targetPageId) {
   });
 
   tl.to(radiusObj, {
-    value: 0,
+    value: 150,
     duration: 1.2,
     ease: 'power3.inOut',
     onUpdate: () => {
