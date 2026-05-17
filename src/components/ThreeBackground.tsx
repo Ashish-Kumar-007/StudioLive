@@ -161,14 +161,18 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
         mesh.position.y += Math.sin(mesh.userData.driftAngle) * 0.003;
       });
 
-      // Smooth camera interpolation with mouse drift parallax
+      // Smooth camera interpolation with mouse drift parallax & dynamic scroll zoom out
       const activeTarget = targetPosRef.current;
       const targetCamX = activeTarget.x + mouseRef.current.x * 1.5;
       const targetCamY = activeTarget.y + mouseRef.current.y * 1.5;
 
+      // Scroll Zoom Out factor: camera pulls back further as you scroll down
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const scrollZoom = scrollY * 0.0085;
+
       camera.position.x += (targetCamX - camera.position.x) * 0.04;
       camera.position.y += (targetCamY - camera.position.y) * 0.04;
-      camera.position.z += (activeTarget.z - camera.position.z) * 0.04;
+      camera.position.z += (activeTarget.z + scrollZoom - camera.position.z) * 0.04;
 
       camera.lookAt(activeTarget.x, activeTarget.y, 0);
 

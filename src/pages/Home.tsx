@@ -8,6 +8,25 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
   
+  React.useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Background Image zoom-out on scroll
+      gsap.fromTo(".hero-bg",
+        { scale: 1.25 },
+        {
+          scale: 1.0,
+          scrollTrigger: {
+            trigger: ".hero-sec",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+          }
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
   const stories = [
     {
       title: "Ananya & Kabir",
@@ -97,6 +116,9 @@ export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
       
       {/* HERO SECTION */}
       <section className="hero-sec h-screen flex items-center justify-center text-center pt-[85px] relative">
+        {/* Parallax Scaling background backplate */}
+        <div className="hero-bg" />
+        
         <div className="max-w-[900px] px-5 z-10 flex flex-col items-center">
           <p className="text-sm font-semibold tracking-[0.4em] uppercase text-goldPrimary mb-5">
             A Heritage of Love & Light
