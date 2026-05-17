@@ -84,22 +84,22 @@ html.lenis {
 
 /* Photographic Wedding Backdrops with Deep Saffron & Gold Overlays */
 .hero-sec {
-  background: linear-gradient(rgba(7, 9, 14, 0.82), rgba(7, 9, 14, 0.9)), 
+  background: linear-gradient(rgba(7, 9, 14, 0.55), rgba(7, 9, 14, 0.72)), 
               url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
 .stories-sec-bg {
-  background: linear-gradient(rgba(7, 9, 14, 0.94), rgba(7, 9, 14, 0.94)), 
+  background: linear-gradient(rgba(7, 9, 14, 0.78), rgba(7, 9, 14, 0.82)), 
               url('https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
 .experience-sec-bg {
-  background: linear-gradient(rgba(7, 9, 14, 0.94), rgba(7, 9, 14, 0.94)), 
+  background: linear-gradient(rgba(7, 9, 14, 0.8), rgba(7, 9, 14, 0.84)), 
               url('https://images.unsplash.com/photo-1595878715977-2e8f8df6392e?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
 .cta-sec-bg {
-  background: linear-gradient(rgba(7, 9, 14, 0.84), rgba(7, 9, 14, 0.9)), 
+  background: linear-gradient(rgba(7, 9, 14, 0.65), rgba(7, 9, 14, 0.78)), 
               url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 

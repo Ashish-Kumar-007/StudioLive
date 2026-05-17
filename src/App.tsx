@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ThreeBackground } from './components/ThreeBackground';
 import { ApertureLoader } from './components/ApertureLoader';
 import { Navbar } from './components/Navbar';
@@ -10,6 +11,8 @@ import { Story } from './pages/Story';
 import { Events } from './pages/Events';
 import { Team } from './pages/Team';
 import { Book } from './pages/Book';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cameraPositions: Record<string, { x: number; y: number; z: number }> = {
   home: { x: 0, y: 0, z: 12 },
@@ -22,6 +25,61 @@ const cameraPositions: Record<string, { x: number; y: number; z: number }> = {
 export const App: React.FC = () => {
   const [activePage, setActivePage] = useState('home');
   const [targetCameraPos, setTargetCameraPos] = useState(cameraPositions.home);
+
+  // 3D Hinge Scroll Reveals whenever the page panel loads
+  useEffect(() => {
+    // Small timeout to allow DOM content to fully mount
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        const sections = gsap.utils.toArray('.reveal-section');
+        sections.forEach((sec: any, index: number) => {
+          const isEven = index % 2 === 0;
+          const initialRotY = isEven ? -45 : 0;
+          const initialRotX = isEven ? 0 : -45;
+          const origin = isEven ? 'left center' : 'center top';
+
+          // Inject 3D perspective to section wrapper
+          gsap.set(sec, {
+            perspective: 1200,
+            transformStyle: 'preserve-3d',
+          });
+
+          const content = sec.querySelector('.reveal-content') || sec;
+
+          // Initial 3D folded state
+          gsap.set(content, {
+            transformOrigin: origin,
+            rotationY: initialRotY,
+            rotationX: initialRotX,
+            opacity: 0,
+            scale: 0.9,
+            z: -100
+          });
+
+          // Scrub 3D unfold hinge on scroll
+          gsap.to(content, {
+            scrollTrigger: {
+              trigger: sec,
+              start: 'top 90%',
+              end: 'top 35%',
+              scrub: 1,
+              toggleActions: 'play none none reverse',
+            },
+            rotationY: 0,
+            rotationX: 0,
+            opacity: 1,
+            scale: 1,
+            z: 0,
+            ease: 'power2.out',
+          });
+        });
+      });
+
+      return () => ctx.revert();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [activePage]);
 
   // 1. Initialize Lenis Smooth Scrolling
   useEffect(() => {
