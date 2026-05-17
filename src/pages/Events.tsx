@@ -3,22 +3,22 @@ export default function Events() {
     {
       title: 'Weddings',
       desc: 'Cinematic coverage for your big day.',
-      img: '/cat_wedding_1779003426108.png',
+      img: '/cat-wedding.png',
     },
     {
       title: 'Pre-Weddings',
       desc: 'Beautiful outdoor lifestyle portraits.',
-      img: '/cat_prewedding_1779003441441.png',
+      img: '/cat-prewedding.png',
     },
     {
       title: 'Corporate Functions',
       desc: 'Professional coverage for galas and events.',
-      img: '/cat_corporate_1779003466118.png',
+      img: '/cat-corporate.png',
     },
     {
       title: 'Private Parties',
       desc: 'Birthdays, anniversaries, and family celebrations.',
-      img: '/cat_party_1779003482789.png',
+      img: '/cat-party.png',
     },
   ];
 

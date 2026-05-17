@@ -4,7 +4,7 @@ export default function About() {
     <div className="page-content py-24 px-6 max-w-7xl mx-auto" id="about">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
         <div className="reveal rounded-2xl overflow-hidden shadow-xl">
-          <img src="/our_story_1779003402621.png" alt="The StudioLive Team behind the scenes" className="w-full object-cover" />
+          <img src="/our-story.png" alt="The StudioLive Team behind the scenes" className="w-full object-cover" />
         </div>
         <div className="reveal">
           <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-6">Our Story</h2>

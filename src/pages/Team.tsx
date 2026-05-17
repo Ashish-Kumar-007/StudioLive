@@ -3,17 +3,17 @@ export default function Team() {
     {
       name: 'James Miller',
       role: 'Lead Photographer',
-      img: '/team_1_1779003510875.png',
+      img: '/team-1.png',
     },
     {
       name: 'Sarah Jenkins',
       role: 'Lead Cinematographer',
-      img: '/team_2_1779003526664.png',
+      img: '/team-2.png',
     },
     {
       name: 'David Chen',
       role: 'Head Editor',
-      img: '/team_3_1779003548013.png',
+      img: '/team-3.png',
     },
   ];
 

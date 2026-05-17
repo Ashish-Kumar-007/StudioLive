@@ -10,7 +10,7 @@ export default function Home({ onNavigate }: HomeProps) {
       {/* Full Bleed Cinematic Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="home">
         <div className="absolute inset-0 z-0">
-          <img src="/wedding_hero_1779003385496.png" alt="Cinematic Wedding Photography" className="w-full h-full object-cover opacity-20" />
+          <img src="/wedding-hero.png" alt="Cinematic Wedding Photography" className="w-full h-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
         </div>
         
@@ -101,7 +101,7 @@ export default function Home({ onNavigate }: HomeProps) {
           
           <div className="masonry-grid reveal">
             <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/cat_wedding_1779003426108.png" alt="Wedding Portrait" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src="/cat-wedding.png" alt="Wedding Portrait" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                 <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Riya & Vikram</h3>
                 <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Royal Jaipur Wedding</p>
@@ -109,7 +109,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </button>
             
             <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/cat_prewedding_1779003441441.png" alt="Pre Wedding" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src="/cat-prewedding.png" alt="Pre Wedding" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                 <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Ananya & Rahul</h3>
                 <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Goa Pre-Wedding</p>
@@ -117,7 +117,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </button>
             
             <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/cat_party_1779003482789.png" alt="Party" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src="/cat-party.png" alt="Party" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                 <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Sangeet Night</h3>
                 <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Candid Expressions</p>
@@ -125,7 +125,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </button>
             
             <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/our_story_1779003402621.png" alt="Couple" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src="/our-story.png" alt="Couple" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                 <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Pooja & Karan</h3>
                 <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Intimate Portraits</p>
