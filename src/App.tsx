@@ -18,8 +18,10 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const overlayRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const coordsRef = useRef<HTMLDivElement>(null);
+  const rulerTickRef = useRef<HTMLDivElement>(null);
 
-  // Entrance transition on first mount
+  // Entrance transition on first mount & global mouse tracking
   useEffect(() => {
     if (overlayRef.current) {
       gsap.fromTo(overlayRef.current,
@@ -41,6 +43,25 @@ export default function App() {
         { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
       );
     }
+
+    // High-performance window mousemove handler (120 FPS direct DOM update)
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      const xStr = String(Math.round(e.clientX)).padStart(4, '0');
+      const yStr = String(Math.round(e.clientY)).padStart(4, '0');
+      
+      if (coordsRef.current) {
+        coordsRef.current.textContent = `[ X: ${xStr} | Y: ${yStr} ]`;
+      }
+      if (rulerTickRef.current) {
+        rulerTickRef.current.style.setProperty('--ruler-tick-x', `${e.clientX}px`);
+      }
+    };
+
+    window.addEventListener('mousemove', handleGlobalMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMouseMove);
+    };
   }, []);
 
   // GSAP scroll trigger re-init whenever page contents change
@@ -293,6 +314,11 @@ export default function App() {
       {/* Shared Navigation */}
       <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
+      {/* YK Produce - Header Interactive Ruler */}
+      <div className="header-interactive-ruler">
+        <div ref={rulerTickRef} className="header-ruler-tick" />
+      </div>
+
       {/* 3D Viewport Wrapper */}
       <div className="perspective-container flex-grow overflow-hidden flex flex-col">
         {/* Active Page View */}
@@ -306,6 +332,11 @@ export default function App() {
 
       {/* Shared Modular Footer */}
       <Footer onNavigate={handleNavigate} />
+
+      {/* YK Produce - Monospace Floating Coordinates Widget */}
+      <div ref={coordsRef} className="cursor-coordinate-widget hidden md:block">
+        [ X: 0000 | Y: 0000 ]
+      </div>
     </div>
   );
 }

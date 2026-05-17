@@ -175,3 +175,77 @@ body {
   opacity: 0;
 }
 
+/* YK Produce - Header Interactive Ruler Under Navbar */
+.header-interactive-ruler {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(48, 54, 79, 0.08);
+  z-index: 49;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.header-ruler-tick {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 4px;
+  height: 10px;
+  background: theme('colors.primary');
+  transform: translate3d(var(--ruler-tick-x, 0px), 0, 0);
+  will-change: transform;
+}
+
+/* YK Produce - Monospace Floating Coordinates Widget */
+.cursor-coordinate-widget {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 100;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: theme('colors.primary');
+  opacity: 0.4;
+  pointer-events: none;
+  background: rgba(24cf, 240, 224, 0.4);
+  backdrop-filter: blur(4px);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px border-surface-light;
+  transition: opacity 0.3s ease;
+}
+
+/* 02PX - Staggered Asymmetric Deck Offsets */
+@media (min-width: 768px) {
+  .stagger-card-middle {
+    transform: translateY(-40px) !important;
+  }
+}
+
+/* 02PX - Typographic Multiply Blend Video Mask */
+.video-mask-overlay {
+  mix-blend-mode: multiply;
+}
+.video-mask-container {
+  position: relative;
+  background: black;
+  overflow: hidden;
+  border-radius: 24px;
+  width: 240px;
+  height: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 16px;
+  border: 2px solid rgba(255, 213, 0, 0.3);
+}
+@media (min-width: 768px) {
+  .video-mask-container {
+    width: 380px;
+    height: 150px;
+  }
+}
+
+

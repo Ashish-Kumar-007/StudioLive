@@ -1,5 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Calendar, Video, Camera, BookOpen, Quote } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -174,25 +178,96 @@ function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
 }
 
 export default function Home({ onNavigate }: HomeProps) {
+  // Typographic Video Mask scroll scale-up timeline with scroll-scrub pinning
+  useEffect(() => {
+    const maskContainer = document.querySelector('.video-mask-container');
+    const maskOverlay = document.querySelector('.video-mask-overlay');
+    
+    let triggerInstance: any = null;
+    
+    if (maskContainer && maskOverlay) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#home',
+          start: 'top top',
+          end: 'bottom -20%',
+          scrub: 1.2,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1
+        }
+      });
+      
+      triggerInstance = tl.scrollTrigger;
+
+      tl.to(maskContainer, {
+        scale: 6.5,
+        borderRadius: '0px',
+        borderWidth: '0px',
+        ease: 'power2.inOut',
+        duration: 1.5
+      })
+      .to(maskOverlay, {
+        opacity: 0,
+        ease: 'power1.inOut',
+        duration: 0.8
+      }, '<+=0.2');
+    }
+    
+    return () => {
+      if (triggerInstance) {
+        triggerInstance.kill();
+      }
+    };
+  }, []);
+
   return (
     <div className="page-content">
       {/* Full Bleed Cinematic Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="home">
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black" id="home">
+        {/* Background Ambient Video (muted, autoplay, loops behind the scene) */}
         <div className="absolute inset-0 z-0">
-          <img src="/wedding-hero.png" alt="Cinematic Wedding Photography" className="w-full h-full object-cover opacity-20" />
+          <video 
+            src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-the-park-40177-large.mp4" 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            className="w-full h-full object-cover opacity-15"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
         </div>
         
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <div className="reveal">
             <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold tracking-widest uppercase">
               Capturing Life's Best Moments
             </div>
-            <h1 className="text-editorial text-5xl md:text-7xl lg:text-8xl text-primary mb-6 leading-tight">
-              Capturing Love<br />& Timeless Moments.
+            
+            {/* Cinematic Hybrid Typographic Video Mask */}
+            <h1 className="text-editorial text-5xl md:text-7xl lg:text-[7.5rem] text-primary mb-8 leading-[1.1] flex flex-col md:flex-row items-center justify-center font-bold">
+              <span className="tracking-tight uppercase">THE STUDIO</span>
+              
+              {/* Typographic Mask Window: mix-blend multiply display */}
+              <span className="video-mask-container relative inline-block my-4 md:my-0 select-none group">
+                <video 
+                  src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-walking-in-the-park-40177-large.mp4" 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline 
+                  className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700"
+                />
+                <span className="absolute inset-0 bg-black text-white font-black flex items-center justify-center text-5xl md:text-8xl lg:text-9xl tracking-tighter video-mask-overlay leading-none select-none pointer-events-none">
+                  LIVE
+                </span>
+              </span>
+              
+              <span className="tracking-tight uppercase">EXPERIENCE</span>
             </h1>
+            
             <p className="text-lg md:text-xl text-dim max-w-2xl mx-auto mb-10">
-              StudioLive provides premium, candid photography and cinematic films for your special days. Relive your magic over and over.
+              Breathtaking Virtual Production, Fine Art Photography, and Cinematic Stories. Crafting premium, unscripted emotions that live forever.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button 
@@ -233,7 +308,8 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12), transparent 80%)', mixBlendMode: 'overlay' }} />
           </div>
           
-          <div className="group glass p-10 rounded-3xl experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+          {/* 02PX Staggered Deck - Shifting Middle Card Vertically using Margins */}
+          <div className="group glass p-10 rounded-3xl experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden md:-mt-10 md:mb-10" style={{ transformStyle: 'preserve-3d' }}>
             <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
                 <Camera className="w-8 h-8" />
