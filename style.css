@@ -916,3 +916,36 @@ footer {
   .booking-form { padding: 30px; }
   .footer-grid { grid-template-cols: 1fr; }
 }
+
+/* Photographic Wedding Backdrops with Deep Saffron & Gold Overlays */
+.hero-sec {
+  background: linear-gradient(rgba(7, 9, 14, 0.82), rgba(7, 9, 14, 0.9)), 
+              url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+}
+
+.stories-sec-bg {
+  background: linear-gradient(rgba(7, 9, 14, 0.94), rgba(7, 9, 14, 0.94)), 
+              url('https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+}
+
+.experience-sec-bg {
+  background: linear-gradient(rgba(7, 9, 14, 0.94), rgba(7, 9, 14, 0.94)), 
+              url('https://images.unsplash.com/photo-1595878715977-2e8f8df6392e?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+}
+
+.cta-sec-bg {
+  background: linear-gradient(rgba(7, 9, 14, 0.84), rgba(7, 9, 14, 0.9)), 
+              url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+}
+
+/* Section Alignment & Centering constraints */
+.stories-grid, .exp-row, .cta-wrap, .testi-card, .footer-grid, .story-row, .team-grid, .book-row {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.exp-row {
+  align-items: center;
+  justify-content: space-between;
+}
