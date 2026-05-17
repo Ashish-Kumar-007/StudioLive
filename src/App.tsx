@@ -26,11 +26,32 @@ export const App: React.FC = () => {
   const [activePage, setActivePage] = useState('home');
   const [targetCameraPos, setTargetCameraPos] = useState(cameraPositions.home);
 
-  // 3D Hinge Scroll Reveals whenever the page panel loads
+  // 3D Hinge Scroll Reveals & Parallax Background Zoom-Outs whenever the page panel loads
   useEffect(() => {
     // Small timeout to allow DOM content to fully mount
     const timer = setTimeout(() => {
       const ctx = gsap.context(() => {
+        
+        // 1. Auto-bind dynamic zoom-out triggers to every `.zoom-bg` background
+        const bgElements = gsap.utils.toArray('.zoom-bg');
+        bgElements.forEach((bg: any) => {
+          const parent = bg.closest('section') || bg.parentElement;
+          gsap.fromTo(bg,
+            { scale: 1.25 },
+            {
+              scale: 1.0,
+              scrollTrigger: {
+                trigger: parent,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+                invalidateOnRefresh: true,
+              }
+            }
+          );
+        });
+
+        // 2. 3D Unfolding + Zoom-Out Section Reveals
         const sections = gsap.utils.toArray('.reveal-section');
         sections.forEach((sec: any, index: number) => {
           const isEven = index % 2 === 0;
@@ -46,17 +67,17 @@ export const App: React.FC = () => {
 
           const content = sec.querySelector('.reveal-content') || sec;
 
-          // Initial 3D folded state
+          // Initial 3D folded + zoomed-in state
           gsap.set(content, {
             transformOrigin: origin,
             rotationY: initialRotY,
             rotationX: initialRotX,
             opacity: 0,
-            scale: 0.9,
-            z: -100
+            scale: 1.12, // Start zoomed-in for the zoom-out reveal
+            z: -50
           });
 
-          // Scrub 3D unfold hinge on scroll
+          // Scrub 3D unfold hinge + zoom-out on scroll
           gsap.to(content, {
             scrollTrigger: {
               trigger: sec,

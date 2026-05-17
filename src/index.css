@@ -97,19 +97,50 @@ html.lenis {
   transform-origin: center center;
 }
 
-.stories-sec-bg {
+.stories-sec-bg, .experience-sec-bg, .cta-sec-bg {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.stories-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: linear-gradient(rgba(7, 9, 14, 0.78), rgba(7, 9, 14, 0.82)), 
               url('https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+  transform-origin: center center;
+  will-change: transform;
 }
 
-.experience-sec-bg {
+.experience-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: linear-gradient(rgba(7, 9, 14, 0.8), rgba(7, 9, 14, 0.84)), 
               url('https://images.unsplash.com/photo-1595878715977-2e8f8df6392e?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+  transform-origin: center center;
+  will-change: transform;
 }
 
-.cta-sec-bg {
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: linear-gradient(rgba(7, 9, 14, 0.65), rgba(7, 9, 14, 0.78)), 
               url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.generic-cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(rgba(7, 9, 14, 0.72), rgba(7, 9, 14, 0.84)), 
+              url('https://images.unsplash.com/photo-1519225495810-7512c696af05?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
+  transform-origin: center center;
+  will-change: transform;
 }
 
 /* Glassmorphism Buttons & Forms Base classes */

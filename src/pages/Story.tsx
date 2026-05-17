@@ -65,8 +65,11 @@ export const Story: React.FC<StoryProps> = ({ onChangePage }) => {
       </section>
 
       {/* CTA Section */}
-      <section className="reveal-section cta-sec py-[120px] text-center px-[5%] relative">
-        <div className="reveal-content w-full flex flex-col items-center">
+      <section className="reveal-section cta-sec cta-sec-bg py-[120px] text-center px-[5%] relative">
+        {/* Parallax Scaling background backplate */}
+        <div className="zoom-bg generic-cta-bg" />
+        
+        <div className="reveal-content w-full flex flex-col items-center relative z-10">
           <h2 className="font-serif text-4xl md:text-5xl text-textLight mb-8 leading-tight">
             Ready to tell your story?
           </h2>

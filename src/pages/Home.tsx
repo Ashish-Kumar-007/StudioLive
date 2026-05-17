@@ -140,7 +140,10 @@ export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
 
       {/* FEATURED LOVE STORIES */}
       <section className="reveal-section reveal stories-sec-bg py-[120px] px-[5%] relative">
-        <div className="reveal-content w-full flex flex-col">
+        {/* Parallax Scaling background backplate */}
+        <div className="zoom-bg stories-bg" />
+        
+        <div className="reveal-content w-full flex flex-col relative z-10">
           <div className="text-center mb-[80px] max-w-[1200px] mx-auto w-full">
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-goldPrimary mb-3">
               Cinematic Highlights
@@ -204,7 +207,10 @@ export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
 
       {/* STUDIOLIVE EXPERIENCE */}
       <section className="reveal-section reveal experience-sec-bg py-[120px] px-[5%] relative">
-        <div className="reveal-content w-full">
+        {/* Parallax Scaling background backplate */}
+        <div className="zoom-bg experience-bg" />
+        
+        <div className="reveal-content w-full relative z-10">
           <div className="exp-row flex gap-[80px] max-lg:flex-col max-lg:gap-10 max-w-[1200px] mx-auto items-center justify-between">
             
             <div className="flex-1">
@@ -289,7 +295,10 @@ export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
 
       {/* CALL TO ACTION (CTA) */}
       <section className="reveal-section cta-sec cta-sec-bg py-[160px] px-[5%] text-center relative">
-        <div className="reveal-content w-full">
+        {/* Parallax Scaling background backplate */}
+        <div className="zoom-bg cta-bg" />
+        
+        <div className="reveal-content w-full relative z-10">
           <div className="cta-wrap max-w-[800px] mx-auto flex flex-col items-center">
             <h2 className="font-serif text-5xl md:text-6xl text-textLight mb-6 leading-tight">
               Let's craft your heritage film together.
