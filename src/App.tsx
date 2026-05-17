@@ -76,18 +76,29 @@ export default function App() {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
       const reveals = document.querySelectorAll('.reveal');
-      reveals.forEach((el) => {
+      reveals.forEach((el, index) => {
+        const isEven = index % 2 === 0;
+        
         gsap.fromTo(el, 
-          { autoAlpha: 0, y: 30 },
+          { 
+            autoAlpha: 0, 
+            rotationX: isEven ? 0 : -25,
+            rotationY: isEven ? -25 : 0, 
+            z: -120,
+            transformPerspective: 1200, 
+            transformOrigin: isEven ? 'left center' : 'top center'
+          },
           {
             autoAlpha: 1, 
-            y: 0, 
-            duration: 0.8, 
+            rotationX: 0, 
+            rotationY: 0,
+            z: 0,
+            duration: 1.3, 
             ease: 'power2.out',
             clearProps: 'transform',
             scrollTrigger: {
               trigger: el,
-              start: 'top 85%',
+              start: 'top 88%',
               toggleActions: 'play none none none'
             }
           }
