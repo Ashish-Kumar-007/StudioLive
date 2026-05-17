@@ -1,10 +1,116 @@
+import { useEffect, useRef, useState } from 'react';
 import { Calendar, Video, Camera, BookOpen, Quote } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
+interface TestimonialCardProps {
+  quote: string;
+  author: string;
+  location: string;
+  isPrimary?: boolean;
+}
+
+// 3D Parallax Tilt Testimonial Card Component
+function TestimonialCard({ quote, author, location, isPrimary = false }: TestimonialCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transformStyle, setTransformStyle] = useState<string>('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+
+    // Calculate relative coordinates
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Centered bounds
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Max tilt is 12 degrees for an ultra-realistic, controlled feel
+    const rotateX = ((centerY - y) / centerY) * 12;
+    const rotateY = ((x - centerX) / centerX) * 12;
+
+    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
+  };
+
+  const handleMouseLeave = () => {
+    setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`testimonial-card-3d rounded-3xl p-8 relative text-left transition-all duration-200 ease-out cursor-pointer select-none origin-center ${
+        isPrimary
+          ? 'bg-primary text-white shadow-2xl border border-white/10'
+          : 'bg-background text-primary border border-surface-light hover:border-primary/20 shadow-lg'
+      }`}
+      style={{
+        transform: transformStyle,
+        transformStyle: 'preserve-3d',
+        willChange: 'transform'
+      }}
+    >
+      {/* 3D Depth Parallax Wrapper (Floats content 40px above card face!) */}
+      <div style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
+        <Quote className={`w-8 h-8 mb-6 ${isPrimary ? 'text-white/20' : 'text-primary/20'}`} />
+        <p className={`text-editorial text-xl leading-relaxed mb-8 ${isPrimary ? 'text-white' : 'text-primary'}`}>
+          {quote}
+        </p>
+        <p className={`font-bold tracking-widest uppercase text-xs ${isPrimary ? 'text-white/70' : 'text-dim'}`}>
+          {author}<br />
+          <span className={`font-normal text-xs ${isPrimary ? 'text-white/50' : 'text-primary/60'}`}>
+            {location}
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Home({ onNavigate }: HomeProps) {
+
+  // Staggered 3D Swing Entrance on Scroll
+  useEffect(() => {
+    const cards = document.querySelectorAll('.testimonial-card-3d');
+    if (cards.length > 0) {
+      gsap.fromTo(cards,
+        {
+          opacity: 0,
+          rotationY: -45,
+          rotationX: 15,
+          z: -400,
+          scale: 0.85
+        },
+        {
+          opacity: 1,
+          rotationY: 0,
+          rotationX: 0,
+          z: 0,
+          scale: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: '.testimonials-section-3d',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+  }, []);
+
   return (
     <div className="page-content">
       {/* Full Bleed Cinematic Hero Section */}
@@ -139,40 +245,33 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-32 px-6 max-w-7xl mx-auto text-center reveal">
-        <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-16">Words of Love</h2>
+      {/* Words of Love (Testimonials) in Ultra-Premium 3D */}
+      <section className="testimonials-section-3d py-32 px-6 max-w-7xl mx-auto text-center overflow-hidden">
+        <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-20 reveal">Words of Love</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-background rounded-3xl p-8 shadow-lg relative text-left">
-            <Quote className="w-8 h-8 text-primary/20 mb-6" />
-            <p className="text-editorial text-xl text-primary leading-relaxed mb-8">
-              "StudioLive captured the soul of our wedding. We didn't even notice them half the time, yet they managed to photograph the most intimate, breathtaking candid moments."
-            </p>
-            <p className="font-bold tracking-widest uppercase text-xs text-dim">
-              Neha & Siddharth<br /><span className="font-normal text-primary/60">Mumbai</span>
-            </p>
-          </div>
+        {/* 3D Perspective container wrapper */}
+        <div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch"
+          style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}
+        >
+          <TestimonialCard 
+            quote="&quot;StudioLive captured the soul of our wedding. We didn't even notice them half the time, yet they managed to photograph the most intimate, breathtaking candid moments.&quot;"
+            author="Neha & Siddharth"
+            location="Mumbai"
+          />
           
-          <div className="bg-primary rounded-3xl p-8 shadow-xl relative text-left transform md:-translate-y-4">
-            <Quote className="w-8 h-8 text-white/20 mb-6" />
-            <p className="text-editorial text-xl text-white leading-relaxed mb-8">
-              "The cinematic film made our entire family cry. It felt like watching a Hollywood movie of our own life. Absolute perfection from the team!"
-            </p>
-            <p className="font-bold tracking-widest uppercase text-xs text-white/70">
-              Pooja & Karan<br /><span className="font-normal text-white/50">Udaipur</span>
-            </p>
-          </div>
+          <TestimonialCard 
+            quote="&quot;The cinematic film made our entire family cry. It felt like watching a Hollywood movie of our own life. Absolute perfection from the team!&quot;"
+            author="Pooja & Karan"
+            location="Udaipur"
+            isPrimary={true}
+          />
           
-          <div className="bg-background rounded-3xl p-8 shadow-lg relative text-left">
-            <Quote className="w-8 h-8 text-primary/20 mb-6" />
-            <p className="text-editorial text-xl text-primary leading-relaxed mb-8">
-              "Their energy, professionalism, and eye for detail is unmatched. The Italian photobook they delivered is a piece of art that sits perfectly in our living room."
-            </p>
-            <p className="font-bold tracking-widest uppercase text-xs text-dim">
-              Riya & Vikram<br /><span className="font-normal text-primary/60">Jaipur</span>
-            </p>
-          </div>
+          <TestimonialCard 
+            quote="&quot;Their energy, professionalism, and eye for detail is unmatched. The Italian photobook they delivered is a piece of art that sits perfectly in our living room.&quot;"
+            author="Riya & Vikram"
+            location="Jaipur"
+          />
         </div>
       </section>
 
