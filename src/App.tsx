@@ -93,7 +93,7 @@ export default function App() {
             duration: 1.2,
             ease: 'power3.out',
             stagger: 0.15,
-            clearProps: 'transform,opacity',
+            clearProps: 'transform',
             scrollTrigger: {
               trigger: '.experience-grid-container',
               start: 'top 85%',

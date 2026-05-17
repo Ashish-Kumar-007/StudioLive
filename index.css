@@ -171,3 +171,7 @@ body {
   animation: float3D-exp3 5.8s ease-in-out infinite;
 }
 
+.experience-card-3d {
+  opacity: 0;
+}
+

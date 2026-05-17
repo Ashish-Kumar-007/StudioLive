@@ -220,7 +220,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 experience-grid-container" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
-          <div className="group glass p-10 rounded-3xl reveal experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+          <div className="group glass p-10 rounded-3xl experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
             <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
                 <Video className="w-8 h-8" />
@@ -233,7 +233,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12), transparent 80%)', mixBlendMode: 'overlay' }} />
           </div>
           
-          <div className="group glass p-10 rounded-3xl reveal experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+          <div className="group glass p-10 rounded-3xl experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
             <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
                 <Camera className="w-8 h-8" />
@@ -246,7 +246,7 @@ export default function Home({ onNavigate }: HomeProps) {
             <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12), transparent 80%)', mixBlendMode: 'overlay' }} />
           </div>
           
-          <div className="group glass p-10 rounded-3xl reveal experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+          <div className="group glass p-10 rounded-3xl experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
             <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
                 <BookOpen className="w-8 h-8" />
