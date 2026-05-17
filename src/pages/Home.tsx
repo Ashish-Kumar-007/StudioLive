@@ -247,33 +247,33 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* 3D Ribbon Infinite Scrolling Marquee */}
-      <section className="py-20 border-y border-surface-light bg-surface/10 marquee-3d-viewport reveal">
-        <div className="text-center mb-10">
-          <p className="text-sm font-bold tracking-[0.2em] text-dim uppercase">As Featured In & Trusted By</p>
+      <section className="py-16 md:py-20 border-y border-surface-light bg-surface/10 marquee-3d-viewport reveal">
+        <div className="text-center mb-8 md:mb-10">
+          <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-dim uppercase">As Featured In & Trusted By</p>
         </div>
-        <div className="marquee-3d-ribbon py-6 bg-primary text-white shadow-2xl relative overflow-hidden">
+        <div className="marquee-3d-ribbon py-4 md:py-6 bg-primary text-white shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
-          <div className="marquee-track flex gap-24 items-center whitespace-nowrap">
+          <div className="marquee-track flex gap-12 md:gap-24 items-center whitespace-nowrap">
             {/* Set 1 */}
-            <span className="text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
-            <span className="text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
-            <span className="text-3xl font-serif italic">The Knot</span>
-            <span className="text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
-            <span className="text-3xl font-serif">ShaadiSaga</span>
+            <span className="text-xl md:text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-lg md:text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-xl md:text-3xl font-serif italic">The Knot</span>
+            <span className="text-lg md:text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-xl md:text-3xl font-serif">ShaadiSaga</span>
             
             {/* Set 2 */}
-            <span className="text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
-            <span className="text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
-            <span className="text-3xl font-serif italic">The Knot</span>
-            <span className="text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
-            <span className="text-3xl font-serif">ShaadiSaga</span>
+            <span className="text-xl md:text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-lg md:text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-xl md:text-3xl font-serif italic">The Knot</span>
+            <span className="text-lg md:text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-xl md:text-3xl font-serif">ShaadiSaga</span>
 
             {/* Set 3 */}
-            <span className="text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
-            <span className="text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
-            <span className="text-3xl font-serif italic">The Knot</span>
-            <span className="text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
-            <span className="text-3xl font-serif">ShaadiSaga</span>
+            <span className="text-xl md:text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-lg md:text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-xl md:text-3xl font-serif italic">The Knot</span>
+            <span className="text-lg md:text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-xl md:text-3xl font-serif">ShaadiSaga</span>
           </div>
         </div>
       </section>
