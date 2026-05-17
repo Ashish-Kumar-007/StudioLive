@@ -76,10 +76,6 @@ h1, h2, h3, h4 {
   opacity: 1;
 }
 
-.page-content {
-  opacity: 0;
-}
-
 .gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;

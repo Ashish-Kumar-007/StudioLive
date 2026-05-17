@@ -19,15 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to('.page-transition-overlay', {
     opacity: 0,
     duration: 0.6,
-    ease: 'power2.inOut'
+    ease: 'power2.inOut',
+    onComplete: () => {
+      // Hide completely to ensure it never blocks clicks
+      const overlay = document.querySelector('.page-transition-overlay') as HTMLElement;
+      if (overlay) overlay.style.display = 'none';
+    }
   })
-  .to('.page-content', {
-    opacity: 1,
-    y: 0,
+  .from('.page-content', {
+    opacity: 0,
+    y: 30,
     duration: 0.8,
     ease: 'power3.out',
     clearProps: 'all'
-  }, "-=0.3");
+  }, "-=0.4");
 
   // GSAP Scroll Animations (Replacing Intersection Observer)
   const revealElements = document.querySelectorAll('.reveal');
@@ -55,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = link.getAttribute('href');
       if (target && !target.startsWith('#') && target !== window.location.pathname) {
         e.preventDefault();
+        
+        const overlay = document.querySelector('.page-transition-overlay') as HTMLElement;
+        if (overlay) overlay.style.display = 'block';
+
         gsap.to('.page-transition-overlay', {
           opacity: 1,
           duration: 0.4,
