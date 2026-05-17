@@ -144,3 +144,30 @@ body {
   animation: float3D-3 6.5s ease-in-out infinite;
 }
 
+/* Experience Cards Auto Float Bobbing Keyframes */
+@keyframes float3D-exp1 {
+  0% { transform: perspective(1000px) rotateX(1.2deg) rotateY(-2.5deg) translateZ(2px); }
+  50% { transform: perspective(1000px) rotateX(-1.2deg) rotateY(1.5deg) translateZ(-2px); }
+  100% { transform: perspective(1000px) rotateX(1.2deg) rotateY(-2.5deg) translateZ(2px); }
+}
+@keyframes float3D-exp2 {
+  0% { transform: perspective(1000px) rotateX(-1.8deg) rotateY(2.2deg) translateZ(-5px); }
+  50% { transform: perspective(1000px) rotateX(1.8deg) rotateY(-2.2deg) translateZ(5px); }
+  100% { transform: perspective(1000px) rotateX(-1.8deg) rotateY(2.2deg) translateZ(-5px); }
+}
+@keyframes float3D-exp3 {
+  0% { transform: perspective(1000px) rotateX(1.5deg) rotateY(-1.8deg) translateZ(3px); }
+  50% { transform: perspective(1000px) rotateX(-0.8deg) rotateY(2.5deg) translateZ(-3px); }
+  100% { transform: perspective(1000px) rotateX(1.5deg) rotateY(-1.8deg) translateZ(3px); }
+}
+
+.float-3d-exp1 {
+  animation: float3D-exp1 5.5s ease-in-out infinite;
+}
+.float-3d-exp2 {
+  animation: float3D-exp2 6s ease-in-out infinite;
+}
+.float-3d-exp3 {
+  animation: float3D-exp3 5.8s ease-in-out infinite;
+}
+
