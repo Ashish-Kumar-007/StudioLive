@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Calendar, Video, Camera, BookOpen, Quote } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -79,38 +79,6 @@ function TestimonialCard({ quote, author, location, isPrimary = false }: Testimo
 }
 
 export default function Home({ onNavigate }: HomeProps) {
-
-  // Staggered 3D Swing Entrance on Scroll
-  useEffect(() => {
-    const cards = document.querySelectorAll('.testimonial-card-3d');
-    if (cards.length > 0) {
-      gsap.fromTo(cards,
-        {
-          opacity: 0,
-          rotationY: -45,
-          rotationX: 15,
-          z: -400,
-          scale: 0.85
-        },
-        {
-          opacity: 1,
-          rotationY: 0,
-          rotationX: 0,
-          z: 0,
-          scale: 1,
-          duration: 1.2,
-          ease: 'power3.out',
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: '.testimonials-section-3d',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          }
-        }
-      );
-    }
-  }, []);
-
   return (
     <div className="page-content">
       {/* Full Bleed Cinematic Hero Section */}

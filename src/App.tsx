@@ -69,6 +69,35 @@ export default function App() {
           }
         );
       });
+
+      // 3D Testimonials stagger swing!
+      const testimonialCards = document.querySelectorAll('.testimonial-card-3d');
+      if (testimonialCards.length > 0) {
+        gsap.fromTo(testimonialCards,
+          {
+            opacity: 0,
+            rotationY: -45,
+            rotationX: 15,
+            z: -400,
+            scale: 0.85
+          },
+          {
+            opacity: 1,
+            rotationY: 0,
+            rotationX: 0,
+            z: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+            stagger: 0.15,
+            scrollTrigger: {
+              trigger: '.testimonials-section-3d',
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      }
     }, 100);
 
   }, [currentPage]);
