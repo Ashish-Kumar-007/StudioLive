@@ -1,17 +1,17 @@
 :root {
-  --bg-dark: #111111;
-  --surface: #1a1a1a;
-  --surface-light: #242424;
-  --accent-primary: #D4AF37; /* Premium Champagne Gold */
-  --accent-white: #fafafa;
-  --accent-gray: #333333;
-  --text-main: #f0f0f0;
-  --text-dim: #a0a0a0;
-  --text-dark: #555555;
-  --border: #2a2a2a;
-  --glass: rgba(17, 17, 17, 0.85);
-  --gradient-primary: linear-gradient(135deg, #E6C25B, #B8901F);
-  --gradient-dark: linear-gradient(180deg, #1a1a1a 0%, #111111 100%);
+  --bg-dark: #f0f0db;
+  --surface: #e1d9bc;
+  --surface-light: #acbac4;
+  --accent-primary: #30364f;
+  --accent-white: #ffffff;
+  --accent-gray: #acbac4;
+  --text-main: #30364f;
+  --text-dim: #505870;
+  --text-dark: #f0f0db;
+  --border: #acbac4;
+  --glass: rgba(240, 240, 219, 0.85);
+  --gradient-primary: linear-gradient(135deg, #30364f, #4a5378);
+  --gradient-dark: linear-gradient(180deg, #e1d9bc 0%, #f0f0db 100%);
   
   --font-main: 'Outfit', sans-serif;
   --radius-sm: 4px; /* Sharper radius for aggressive look */
@@ -128,7 +128,7 @@ h1, h2, h3, h4 {
 }
 
 .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(48, 54, 79, 0.05);
   border-color: var(--text-dim);
 }
 
@@ -228,7 +228,7 @@ nav.scrolled {
 
 .badge {
   background: rgba(0, 242, 255, 0.1);
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   padding: 0.4rem 1rem;
   border-radius: var(--radius-full);
   font-size: 0.75rem;
@@ -292,7 +292,7 @@ nav.scrolled {
 .floating-card .label { font-size: 0.7rem; color: var(--text-dim); display: block; }
 .floating-card .val { font-size: 1.1rem; font-weight: 800; }
 
-.cyan { color: var(--accent-cyan); }
+.cyan { color: var(--accent-primary); }
 .purple { color: var(--accent-purple); }
 
 @keyframes float {
@@ -361,7 +361,7 @@ nav.scrolled {
 
 /* Benefits */
 .glass-bg {
-  background: linear-gradient(180deg, rgba(22, 22, 26, 0) 0%, rgba(22, 22, 26, 0.5) 100%);
+  background: linear-gradient(180deg, rgba(225, 217, 188, 0) 0%, rgba(225, 217, 188, 0.8) 100%);
 }
 
 .benefits-grid {
@@ -381,12 +381,12 @@ nav.scrolled {
   flex-shrink: 0;
   width: 48px;
   height: 48px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(48, 54, 79, 0.05);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
 }
 
 .benefit-item h4 {
@@ -431,7 +431,7 @@ nav.scrolled {
   background: var(--accent-primary);
   border-radius: 50%;
   margin-top: 6px;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 10px rgba(48, 54, 79, 0.5);
 }
 
 .client-benefit h4 {
@@ -564,7 +564,7 @@ nav.scrolled {
 
 /* Booking Form */
 .booking-section {
-  background: linear-gradient(135deg, rgba(22, 22, 26, 0.8) 0%, rgba(10, 10, 12, 0.8) 100%);
+  background: var(--surface);
   border-radius: var(--radius-lg);
   padding: 4rem;
   border: 1px solid var(--border);
@@ -591,11 +591,11 @@ nav.scrolled {
 }
 
 .form-control {
-  background: var(--surface);
+  background: var(--bg-dark);
   border: 1px solid var(--border);
   padding: 1rem;
   border-radius: var(--radius);
-  color: var(--text-light);
+  color: var(--text-main);
   font-family: inherit;
   font-size: 1rem;
   transition: border-color 0.3s ease;
@@ -637,7 +637,7 @@ footer {
 
 .footer-links h5 {
   margin-bottom: 1.5rem;
-  color: white;
+  color: var(--text-main);
 }
 
 .footer-links a {
@@ -648,7 +648,7 @@ footer {
 }
 
 .footer-links a:hover {
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
 }
 
 .footer-bottom {
