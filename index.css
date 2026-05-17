@@ -88,3 +88,52 @@ body {
   color: theme('colors.primary');
   font-weight: 800;
 }
+
+/* 3D Ribbon Infinite Scrolling Marquee */
+.marquee-3d-viewport {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+.marquee-3d-ribbon {
+  transform: rotateX(10deg) rotateY(-6deg) rotateZ(-1.5deg);
+  transform-style: preserve-3d;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeHorizontal 22s linear infinite;
+}
+@keyframes marqueeHorizontal {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-33.33%, 0, 0); }
+}
+
+/* Organic 3D Float Bobbing Keyframes */
+@keyframes float3D-1 {
+  0% { transform: perspective(1000px) rotateX(1.5deg) rotateY(-3.5deg) translateZ(4px); }
+  50% { transform: perspective(1000px) rotateX(-1.5deg) rotateY(1.5deg) translateZ(-4px); }
+  100% { transform: perspective(1000px) rotateX(1.5deg) rotateY(-3.5deg) translateZ(4px); }
+}
+@keyframes float3D-2 {
+  0% { transform: perspective(1000px) rotateX(-2deg) rotateY(3deg) translateZ(-8px) translateY(-16px); }
+  50% { transform: perspective(1000px) rotateX(2deg) rotateY(-3deg) translateZ(8px) translateY(-16px); }
+  100% { transform: perspective(1000px) rotateX(-2deg) rotateY(3deg) translateZ(-8px) translateY(-16px); }
+}
+@keyframes float3D-3 {
+  0% { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(6px); }
+  50% { transform: perspective(1000px) rotateX(-1deg) rotateY(3.5deg) translateZ(-6px); }
+  100% { transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(6px); }
+}
+
+.float-3d-card-1 {
+  animation: float3D-1 6s ease-in-out infinite;
+}
+.float-3d-card-2 {
+  /* Retain the offset highlight position on medium screens while bobbing */
+  animation: float3D-2 7s ease-in-out infinite;
+}
+.float-3d-card-3 {
+  animation: float3D-3 6.5s ease-in-out infinite;
+}
+

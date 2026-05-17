@@ -1,9 +1,5 @@
 import { useRef, useState } from 'react';
 import { Calendar, Video, Camera, BookOpen, Quote } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -14,27 +10,28 @@ interface TestimonialCardProps {
   author: string;
   location: string;
   isPrimary?: boolean;
+  floatClass: string;
 }
 
-// 3D Parallax Tilt Testimonial Card Component
-function TestimonialCard({ quote, author, location, isPrimary = false }: TestimonialCardProps) {
+// 3D Parallax Testimonial Card with Organic Auto-Bobbing Drift
+function TestimonialCard({ quote, author, location, isPrimary = false, floatClass }: TestimonialCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [transformStyle, setTransformStyle] = useState<string>('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+  const [isHovered, setIsHovered] = useState(false);
+  const [transformStyle, setTransformStyle] = useState<string>('');
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
+    setIsHovered(true);
     const card = cardRef.current;
     const rect = card.getBoundingClientRect();
 
-    // Calculate relative coordinates
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Centered bounds
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Max tilt is 12 degrees for an ultra-realistic, controlled feel
+    // Responsive 3D tilt tracking the mouse
     const rotateX = ((centerY - y) / centerY) * 12;
     const rotateY = ((x - centerX) / centerX) * 12;
 
@@ -42,7 +39,8 @@ function TestimonialCard({ quote, author, location, isPrimary = false }: Testimo
   };
 
   const handleMouseLeave = () => {
-    setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    setIsHovered(false);
+    setTransformStyle('');
   };
 
   return (
@@ -50,18 +48,21 @@ function TestimonialCard({ quote, author, location, isPrimary = false }: Testimo
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`testimonial-card-3d rounded-3xl p-8 relative text-left transition-all duration-200 ease-out cursor-pointer select-none origin-center ${
+      className={`testimonial-card-3d rounded-3xl p-8 relative text-left select-none origin-center ${
+        isHovered ? '' : floatClass
+      } ${
         isPrimary
           ? 'bg-primary text-white shadow-2xl border border-white/10'
           : 'bg-background text-primary border border-surface-light hover:border-primary/20 shadow-lg'
       }`}
       style={{
-        transform: transformStyle,
+        transform: isHovered ? transformStyle : undefined,
         transformStyle: 'preserve-3d',
+        transition: isHovered ? 'none' : 'transform 0.5s ease-out',
         willChange: 'transform'
       }}
     >
-      {/* 3D Depth Parallax Wrapper (Floats content 40px above card face!) */}
+      {/* 3D Depth Parallax Content Layer */}
       <div style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
         <Quote className={`w-8 h-8 mb-6 ${isPrimary ? 'text-white/20' : 'text-primary/20'}`} />
         <p className={`text-editorial text-xl leading-relaxed mb-8 ${isPrimary ? 'text-white' : 'text-primary'}`}>
@@ -75,6 +76,67 @@ function TestimonialCard({ quote, author, location, isPrimary = false }: Testimo
         </p>
       </div>
     </div>
+  );
+}
+
+interface LoveStoryCardProps {
+  img: string;
+  title: string;
+  desc: string;
+  onClick: () => void;
+}
+
+// 3D Parallax Love Story Card with Depth Layer Popouts
+function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [transformStyle, setTransformStyle] = useState<string>('');
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!cardRef.current) return;
+    setIsHovered(true);
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((centerY - y) / centerY) * 8; // Gentle tilt for large cards
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTransformStyle('');
+  };
+
+  return (
+    <button
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full shadow-lg origin-center"
+      style={{
+        transform: isHovered ? transformStyle : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+        transformStyle: 'preserve-3d',
+        transition: isHovered ? 'none' : 'transform 0.4s ease-out',
+        willChange: 'transform'
+      }}
+    >
+      <div className="relative w-full h-full" style={{ transform: 'translateZ(20px)', transformStyle: 'preserve-3d' }}>
+        <img src={img} alt={title} className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8" style={{ transform: 'translateZ(30px)' }}>
+          <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{title}</h3>
+          <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">{desc}</p>
+        </div>
+      </div>
+    </button>
   );
 }
 
@@ -151,21 +213,39 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* Featured In / Our Clients */}
-      <section className="py-20 border-t border-surface-light reveal bg-surface/10">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-sm font-bold tracking-[0.2em] text-dim uppercase mb-10">As Featured In & Trusted By</p>
-          <div className="flex flex-wrap justify-center gap-12 md:gap-24 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="text-3xl font-serif font-bold text-primary tracking-tighter">VOGUE</div>
-            <div className="text-2xl font-sans font-extrabold text-primary tracking-widest">WedMeGood</div>
-            <div className="text-3xl font-serif italic text-primary">The Knot</div>
-            <div className="text-2xl font-sans font-bold text-primary uppercase tracking-widest">Harper's</div>
-            <div className="text-3xl font-serif text-primary">ShaadiSaga</div>
+      {/* 3D Ribbon Infinite Scrolling Marquee */}
+      <section className="py-20 border-y border-surface-light bg-surface/10 marquee-3d-viewport reveal">
+        <div className="text-center mb-10">
+          <p className="text-sm font-bold tracking-[0.2em] text-dim uppercase">As Featured In & Trusted By</p>
+        </div>
+        <div className="marquee-3d-ribbon py-6 bg-primary text-white shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+          <div className="marquee-track flex gap-24 items-center whitespace-nowrap">
+            {/* Set 1 */}
+            <span className="text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-3xl font-serif italic">The Knot</span>
+            <span className="text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-3xl font-serif">ShaadiSaga</span>
+            
+            {/* Set 2 */}
+            <span className="text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-3xl font-serif italic">The Knot</span>
+            <span className="text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-3xl font-serif">ShaadiSaga</span>
+
+            {/* Set 3 */}
+            <span className="text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-3xl font-serif italic">The Knot</span>
+            <span className="text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-3xl font-serif">ShaadiSaga</span>
           </div>
         </div>
       </section>
 
-      {/* Masonry Portfolio Grid */}
+      {/* Masonry Portfolio Grid with 3D Depth Cards */}
       <section className="bg-surface py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -173,38 +253,34 @@ export default function Home({ onNavigate }: HomeProps) {
             <p className="text-dim text-lg">A glimpse into the magical moments we've captured.</p>
           </div>
           
-          <div className="masonry-grid reveal">
-            <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/cat-wedding.png" alt="Wedding Portrait" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Riya & Vikram</h3>
-                <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Royal Jaipur Wedding</p>
-              </div>
-            </button>
+          <div className="masonry-grid reveal" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
+            <LoveStoryCard 
+              img="/cat-wedding.png" 
+              title="Riya & Vikram" 
+              desc="Royal Jaipur Wedding" 
+              onClick={() => onNavigate('events')} 
+            />
             
-            <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/cat-prewedding.png" alt="Pre Wedding" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Ananya & Rahul</h3>
-                <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Goa Pre-Wedding</p>
-              </div>
-            </button>
+            <LoveStoryCard 
+              img="/cat-prewedding.png" 
+              title="Ananya & Rahul" 
+              desc="Goa Pre-Wedding" 
+              onClick={() => onNavigate('events')} 
+            />
             
-            <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/cat-party.png" alt="Party" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Sangeet Night</h3>
-                <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Candid Expressions</p>
-              </div>
-            </button>
+            <LoveStoryCard 
+              img="/cat-party.png" 
+              title="Sangeet Night" 
+              desc="Candid Expressions" 
+              onClick={() => onNavigate('events')} 
+            />
             
-            <button onClick={() => onNavigate('events')} className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full">
-              <img src="/our-story.png" alt="Couple" className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Pooja & Karan</h3>
-                <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Intimate Portraits</p>
-              </div>
-            </button>
+            <LoveStoryCard 
+              img="/our-story.png" 
+              title="Pooja & Karan" 
+              desc="Intimate Portraits" 
+              onClick={() => onNavigate('events')} 
+            />
           </div>
           
           <div className="text-center mt-16">
@@ -213,7 +289,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* Words of Love (Testimonials) in Ultra-Premium 3D */}
+      {/* Words of Love (Testimonials) in Dynamic 3D with Organic Auto-Bobbing */}
       <section className="testimonials-section-3d py-32 px-6 max-w-7xl mx-auto text-center overflow-hidden">
         <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-20 reveal">Words of Love</h2>
         
@@ -226,6 +302,7 @@ export default function Home({ onNavigate }: HomeProps) {
             quote="&quot;StudioLive captured the soul of our wedding. We didn't even notice them half the time, yet they managed to photograph the most intimate, breathtaking candid moments.&quot;"
             author="Neha & Siddharth"
             location="Mumbai"
+            floatClass="float-3d-card-1"
           />
           
           <TestimonialCard 
@@ -233,12 +310,14 @@ export default function Home({ onNavigate }: HomeProps) {
             author="Pooja & Karan"
             location="Udaipur"
             isPrimary={true}
+            floatClass="float-3d-card-2"
           />
           
           <TestimonialCard 
             quote="&quot;Their energy, professionalism, and eye for detail is unmatched. The Italian photobook they delivered is a piece of art that sits perfectly in our living room.&quot;"
             author="Riya & Vikram"
             location="Jaipur"
+            floatClass="float-3d-card-3"
           />
         </div>
       </section>
