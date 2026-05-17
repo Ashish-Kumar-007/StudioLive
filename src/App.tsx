@@ -90,6 +90,7 @@ export default function App() {
             duration: 1.2,
             ease: 'power3.out',
             stagger: 0.15,
+            clearProps: 'all',
             scrollTrigger: {
               trigger: '.testimonials-section-3d',
               start: 'top 80%',

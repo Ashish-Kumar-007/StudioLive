@@ -86,11 +86,12 @@ interface LoveStoryCardProps {
   onClick: () => void;
 }
 
-// 3D Parallax Love Story Card with Depth Layer Popouts
+// Peak 3D Parallax Love Story Card with Depth Shifting Holographic Parallax
 function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
   const cardRef = useRef<HTMLButtonElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [transformStyle, setTransformStyle] = useState<string>('');
+  const [imgStyle, setImgStyle] = useState<string>('scale(1.05) translate3d(0,0,0)');
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!cardRef.current) return;
@@ -104,15 +105,22 @@ function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((centerY - y) / centerY) * 8; // Gentle tilt for large cards
-    const rotateY = ((x - centerX) / centerX) * 8;
+    // Card frame rotations (max 10 degrees)
+    const rotateX = ((centerY - y) / centerY) * 10;
+    const rotateY = ((x - centerX) / centerX) * 10;
 
-    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+    // Image offset parallax shifts (opposite of mouse tilt to give volumetric 3D look!)
+    const imgX = ((centerX - x) / centerX) * 8;
+    const imgY = ((centerY - y) / centerY) * 8;
+
+    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
+    setImgStyle(`scale(1.15) translate3d(${imgX}px, ${imgY}px, 0px)`);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     setTransformStyle('');
+    setImgStyle('scale(1.05) translate3d(0,0,0)');
   };
 
   return (
@@ -121,20 +129,45 @@ function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className="masonry-item group rounded-xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full shadow-lg origin-center"
+      className="group rounded-3xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full shadow-lg aspect-[4/3] transition-all duration-300"
       style={{
-        transform: isHovered ? transformStyle : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+        transform: isHovered ? transformStyle : undefined,
         transformStyle: 'preserve-3d',
-        transition: isHovered ? 'none' : 'transform 0.4s ease-out',
+        transition: isHovered ? 'none' : 'transform 0.5s ease-out, box-shadow 0.5s ease-out',
+        boxShadow: isHovered ? '0 25px 50px -12px rgba(48, 54, 79, 0.4)' : '0 10px 15px -3px rgba(48, 54, 79, 0.1)',
         willChange: 'transform'
       }}
     >
-      <div className="relative w-full h-full" style={{ transform: 'translateZ(20px)', transformStyle: 'preserve-3d' }}>
-        <img src={img} alt={title} className="w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8" style={{ transform: 'translateZ(30px)' }}>
-          <h3 className="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{title}</h3>
-          <p className="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">{desc}</p>
-        </div>
+      {/* 3D Depth Shrunk Parallax Image Frame */}
+      <div className="absolute inset-0 overflow-hidden" style={{ transform: 'translateZ(-12px)' }}>
+        <img 
+          src={img} 
+          alt={title} 
+          className="w-full h-full object-cover" 
+          style={{
+            transform: imgStyle,
+            transition: isHovered ? 'none' : 'transform 0.5s ease-out',
+            willChange: 'transform'
+          }}
+        />
+      </div>
+
+      {/* Glossy Spot Flare Sweep Overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%)',
+          transform: isHovered ? 'translateZ(10px)' : undefined
+        }}
+      />
+
+      {/* Floating Card Content Layer */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent flex flex-col justify-end p-8 z-20"
+        style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}
+      >
+        <h3 className="text-editorial text-white text-3xl mb-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{title}</h3>
+        <p className="text-white/80 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">{desc}</p>
       </div>
     </button>
   );
@@ -245,7 +278,7 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* Masonry Portfolio Grid with 3D Depth Cards */}
+      {/* Editorial Grid Gallery with Holographic 3D Parallax */}
       <section className="bg-surface py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -253,7 +286,8 @@ export default function Home({ onNavigate }: HomeProps) {
             <p className="text-dim text-lg">A glimpse into the magical moments we've captured.</p>
           </div>
           
-          <div className="masonry-grid reveal" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
+          {/* Perfectly Aligned 3D Grid container */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 reveal" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
             <LoveStoryCard 
               img="/cat-wedding.png" 
               title="Riya & Vikram" 
