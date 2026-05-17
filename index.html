@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudioLive | Executive Command Center for Creative Agencies</title>
-    <meta name="description" content="StudioLive streamlines the entire studio pipeline from lead capture to final production delivery. Premium management for photography and videography agencies." />
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>StudioLive | Premium Photography & Films</title>
+    <meta name="description" content="StudioLive provides premium photography and videography for life's greatest moments." />
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <link rel="stylesheet" href="./index.css" />
   </head>
-  <body>
+  <body class="bg-background text-primary font-sans antialiased overflow-x-hidden">
+    
     <!-- Navigation -->
-    <nav class="glass" id="main-nav">
-      <div class="container nav-content">
-        <div class="logo">
-          <span class="logo-studio">STUDIO</span><span class="logo-live">LIVE</span>
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 glass" id="main-nav">
+      <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <a href="/" class="text-2xl tracking-tighter hover:opacity-80 transition-opacity">
+          <span class="logo-studio text-white font-extrabold bg-primary px-2 py-1 rounded-l-md">STUDIO</span><span class="logo-live text-primary font-extrabold bg-surface px-2 py-1 rounded-r-md">LIVE</span>
+        </a>
+        <div class="hidden md:flex gap-8 items-center">
+          <a href="/" class="font-medium text-dim hover:text-primary transition-colors">Home</a>
+          <a href="/about.html" class="font-medium text-dim hover:text-primary transition-colors">Our Story</a>
+          <a href="/events.html" class="font-medium text-dim hover:text-primary transition-colors">Events</a>
+          <a href="/team.html" class="font-medium text-dim hover:text-primary transition-colors">Our Team</a>
+          <a href="/contact.html" class="btn-primary py-2 px-6 text-sm">Book Now</a>
         </div>
-        <div class="nav-links">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/about.html" class="nav-link">Our Story</a>
-          <a href="/events.html" class="nav-link">Events</a>
-          <a href="/team.html" class="nav-link">Our Team</a>
-          <a href="/contact.html" class="btn-primary nav-link" id="cta-nav">Book Now</a>
-        </div>
-        <button class="mobile-toggle" id="mobile-toggle">
+        <button class="md:hidden text-primary p-2">
           <i data-lucide="menu"></i>
         </button>
       </div>
@@ -39,156 +34,192 @@
     <!-- Page Transition Overlay -->
     <div class="page-transition-overlay"></div>
 
-    <main class="page-content">
+    <main>
       <!-- Full Bleed Cinematic Hero Section -->
-      <section class="hero-section" id="home">
-        <div class="hero-visual">
-          <img src="/wedding-hero.png" alt="Cinematic Wedding Photography">
+      <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="home">
+        <div class="absolute inset-0 z-0">
+          <img src="/wedding-hero.png" alt="Cinematic Wedding Photography" class="w-full h-full object-cover opacity-20">
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
         </div>
-        <div class="container hero-grid">
-          <div class="hero-text reveal">
-            <h1 class="text-editorial">Capturing Love<br>& Timeless Moments.</h1>
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; margin-bottom: var(--spacing-lg);">StudioLive provides premium, candid photography and cinematic films for your special days. Relive your magic over and over.</p>
-            <div class="hero-btns" style="justify-content: center;">
-              <a href="/contact.html" class="btn-primary">Check Availability <i data-lucide="calendar"></i></a>
+        
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          <div class="reveal">
+            <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold tracking-widest uppercase">
+              Capturing Life's Best Moments
+            </div>
+            <h1 class="text-editorial text-5xl md:text-7xl lg:text-8xl text-primary mb-6 leading-tight">
+              Capturing Love<br>& Timeless Moments.
+            </h1>
+            <p class="text-lg md:text-xl text-dim max-w-2xl mx-auto mb-10">
+              StudioLive provides premium, candid photography and cinematic films for your special days. Relive your magic over and over.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a href="/contact.html" class="btn-primary">
+                Check Availability <i data-lucide="calendar" class="w-5 h-5"></i>
+              </a>
+              <a href="/events.html" class="px-8 py-3 rounded-full border border-primary/30 font-semibold hover:bg-primary/5 transition-colors">
+                View Gallery
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       <!-- The StudioLive Experience -->
-      <section class="container" style="padding: 100px 0; text-align: center;">
-        <h2 class="text-editorial" style="font-size: 2.5rem; margin-bottom: var(--spacing-sm); color: var(--accent-primary);">The StudioLive Experience</h2>
-        <p style="max-width: 700px; margin: 0 auto; margin-bottom: var(--spacing-xl); color: var(--text-dim);">We don't just take pictures; we tell your story. Our unobtrusive approach ensures we capture genuine, candid emotions while you simply live in the moment.</p>
+      <section class="py-32 px-6 max-w-7xl mx-auto text-center">
+        <h2 class="text-editorial text-4xl md:text-5xl text-primary mb-6">The StudioLive Experience</h2>
+        <p class="text-dim text-lg max-w-3xl mx-auto mb-16">
+          We don't just take pictures; we tell your story. Our unobtrusive approach ensures we capture genuine, candid emotions while you simply live in the moment.
+        </p>
         
-        <div class="benefits-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-          <div class="benefit-card glass reveal">
-            <i data-lucide="video" class="icon" style="color: var(--accent-primary)"></i>
-            <h3>Cinematic Films</h3>
-            <p>Breathtaking storytelling that looks like a Hollywood movie.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="glass p-10 rounded-2xl reveal flex flex-col items-center text-center">
+            <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+              <i data-lucide="video" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Cinematic Films</h3>
+            <p class="text-dim">Breathtaking storytelling that looks like a Hollywood movie.</p>
           </div>
-          <div class="benefit-card glass reveal" style="animation-delay: 0.1s">
-            <i data-lucide="camera" class="icon" style="color: var(--accent-primary)"></i>
-            <h3>Candid Moments</h3>
-            <p>Unscripted smiles, laughter, and tears preserved forever.</p>
+          
+          <div class="glass p-10 rounded-2xl reveal flex flex-col items-center text-center" style="animation-delay: 100ms">
+            <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+              <i data-lucide="camera" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Candid Moments</h3>
+            <p class="text-dim">Unscripted smiles, laughter, and tears preserved forever.</p>
           </div>
-          <div class="benefit-card glass reveal" style="animation-delay: 0.2s">
-            <i data-lucide="book-open" class="icon" style="color: var(--accent-primary)"></i>
-            <h3>Fine-Art Albums</h3>
-            <p>Premium Italian-crafted photobooks delivered to your door.</p>
+          
+          <div class="glass p-10 rounded-2xl reveal flex flex-col items-center text-center" style="animation-delay: 200ms">
+            <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+              <i data-lucide="book-open" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Fine-Art Albums</h3>
+            <p class="text-dim">Premium Italian-crafted photobooks delivered to your door.</p>
           </div>
         </div>
       </section>
 
       <!-- Masonry Portfolio Grid -->
-      <section style="background-color: var(--surface); padding: 100px 0;">
-        <div class="container">
-          <div style="text-align: center; margin-bottom: var(--spacing-lg);">
-            <h2 class="text-editorial" style="font-size: 2.5rem; color: var(--accent-primary);">Featured Love Stories</h2>
-            <p style="color: var(--text-dim);">A glimpse into the magical moments we've captured.</p>
+      <section class="bg-surface py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-editorial text-4xl md:text-5xl text-primary mb-4">Featured Love Stories</h2>
+            <p class="text-dim text-lg">A glimpse into the magical moments we've captured.</p>
           </div>
           
           <div class="masonry-grid reveal">
-            <a href="/events.html" class="masonry-item">
-              <img src="/cat_wedding.png" alt="Wedding Portrait" class="masonry-img">
-              <div class="masonry-overlay">
-                <h3 class="text-editorial">Riya & Vikram</h3>
-                <p>Royal Jaipur Wedding</p>
+            <a href="/events.html" class="masonry-item group rounded-xl overflow-hidden relative">
+              <img src="/cat_wedding.png" alt="Wedding Portrait" class="w-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                <h3 class="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Riya & Vikram</h3>
+                <p class="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Royal Jaipur Wedding</p>
               </div>
             </a>
-            <a href="/events.html" class="masonry-item">
-              <img src="/cat_prewedding.png" alt="Pre Wedding" class="masonry-img">
-              <div class="masonry-overlay">
-                <h3 class="text-editorial">Ananya & Rahul</h3>
-                <p>Goa Pre-Wedding</p>
+            
+            <a href="/events.html" class="masonry-item group rounded-xl overflow-hidden relative">
+              <img src="/cat_prewedding.png" alt="Pre Wedding" class="w-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                <h3 class="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Ananya & Rahul</h3>
+                <p class="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Goa Pre-Wedding</p>
               </div>
             </a>
-            <a href="/events.html" class="masonry-item">
-              <img src="/cat_party.png" alt="Party Moments" class="masonry-img">
-              <div class="masonry-overlay">
-                <h3 class="text-editorial">Sangeet Night</h3>
-                <p>Candid Expressions</p>
+            
+            <a href="/events.html" class="masonry-item group rounded-xl overflow-hidden relative">
+              <img src="/cat_party.png" alt="Party" class="w-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                <h3 class="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Sangeet Night</h3>
+                <p class="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Candid Expressions</p>
               </div>
             </a>
-            <a href="/events.html" class="masonry-item">
-              <img src="/our_story.png" alt="Couple Session" class="masonry-img">
-              <div class="masonry-overlay">
-                <h3 class="text-editorial">Pooja & Karan</h3>
-                <p>Intimate Portraits</p>
+            
+            <a href="/events.html" class="masonry-item group rounded-xl overflow-hidden relative">
+              <img src="/our_story.png" alt="Couple" class="w-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                <h3 class="text-editorial text-white text-3xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Pooja & Karan</h3>
+                <p class="text-white/80 translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">Intimate Portraits</p>
               </div>
             </a>
           </div>
           
-          <div style="text-align: center; margin-top: var(--spacing-xl);">
-            <a href="/events.html" class="btn-primary" style="background: var(--accent-primary); color: var(--accent-white);">View Full Gallery</a>
+          <div class="text-center mt-16">
+            <a href="/events.html" class="btn-primary">View Full Gallery</a>
           </div>
         </div>
       </section>
 
       <!-- Testimonials -->
-      <section class="testimonials-section reveal">
-        <div class="container">
-          <div class="testimonial-card">
-            <div class="quote-icon">
-              <i data-lucide="quote"></i>
-            </div>
-            <p class="testimonial-text">"StudioLive captured the soul of our wedding. We didn't even notice them half the time, yet they managed to photograph the most intimate, breathtaking candid moments. Our wedding film literally made our entire family cry. Absolute perfection!"</p>
-            <p class="testimonial-author">Neha & Siddharth, Mumbai</p>
+      <section class="py-32 px-6 max-w-4xl mx-auto text-center reveal">
+        <div class="bg-background rounded-3xl p-10 md:p-16 shadow-xl relative">
+          <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-lg">
+            <i data-lucide="quote" class="w-8 h-8 fill-current"></i>
           </div>
+          <p class="text-editorial text-2xl md:text-3xl text-primary leading-relaxed mt-4 mb-8">
+            "StudioLive captured the soul of our wedding. We didn't even notice them half the time, yet they managed to photograph the most intimate, breathtaking candid moments. Absolute perfection!"
+          </p>
+          <p class="font-bold tracking-widest uppercase text-sm text-dim">
+            Neha & Siddharth, Mumbai
+          </p>
         </div>
       </section>
 
       <!-- Massive Footer CTA -->
-      <section class="footer-cta reveal">
-        <h2>Ready to tell your story?</h2>
-        <p>We take a limited number of weddings each year to ensure the highest quality of work and personal attention to our couples. Let's see if we're a match.</p>
-        <a href="/contact.html" class="btn-primary">Check Our Availability</a>
+      <section class="bg-primary text-white py-32 px-6 text-center relative overflow-hidden reveal">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <div class="relative z-10 max-w-3xl mx-auto">
+          <h2 class="text-editorial text-5xl md:text-6xl mb-6">Ready to tell your story?</h2>
+          <p class="text-xl text-white/80 mb-12">
+            We take a limited number of weddings each year to ensure the highest quality of work and personal attention to our couples.
+          </p>
+          <a href="/contact.html" class="inline-block bg-white text-primary font-bold px-10 py-4 rounded-full text-lg hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+            Check Our Availability
+          </a>
+        </div>
       </section>
 
     </main>
 
     <!-- Floating WhatsApp Widget -->
-    <a href="https://wa.me/919840767566" class="floating-whatsapp" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <a href="https://wa.me/919840767566" class="fixed bottom-8 right-8 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-110 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(37,211,102,0.4)] transition-all duration-300 z-50" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" class="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
       </svg>
     </a>
 
-    <footer class="glass">
-      <div class="container footer-grid">
-        <div class="footer-brand">
-          <div class="logo">
-            <span class="logo-studio">STUDIO</span><span class="logo-live">LIVE</span>
-          </div>          <p>Premium photography and videography for life's greatest moments.</p>
+    <footer class="bg-surface py-16 px-6 border-t border-surface-light">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div class="md:col-span-2">
+          <div class="text-2xl mb-4">
+            <span class="logo-studio text-white font-extrabold bg-primary px-2 py-1 rounded-l-md">STUDIO</span><span class="logo-live text-primary font-extrabold bg-background px-2 py-1 rounded-r-md">LIVE</span>
+          </div>
+          <p class="text-dim max-w-sm">Premium photography and videography for life's greatest moments.</p>
         </div>
-        <div class="footer-links">
-          <div>
-            <h5>Services</h5>
-            <a href="#events">Weddings</a>
-            <a href="#events">Corporate</a>
-            <a href="#events">Parties</a>
-          </div>
-          <div>
-            <h5>Company</h5>
-            <a href="#">About</a>
-            <a href="#">Careers</a>
-            <a href="#">Blog</a>
-          </div>
-          <div>
-            <h5>Legal</h5>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-          </div>
+        
+        <div>
+          <h4 class="font-bold text-primary mb-4">Services</h4>
+          <ul class="space-y-2 text-dim">
+            <li><a href="/events.html" class="hover:text-primary transition-colors">Weddings</a></li>
+            <li><a href="/events.html" class="hover:text-primary transition-colors">Corporate</a></li>
+            <li><a href="/events.html" class="hover:text-primary transition-colors">Pre-Weddings</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-bold text-primary mb-4">Company</h4>
+          <ul class="space-y-2 text-dim">
+            <li><a href="/about.html" class="hover:text-primary transition-colors">Our Story</a></li>
+            <li><a href="/team.html" class="hover:text-primary transition-colors">Our Team</a></li>
+            <li><a href="/contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+          </ul>
         </div>
       </div>
-      <div class="footer-bottom">
+      
+      <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-surface-light text-center text-sm text-dim">
         <p>&copy; 2026 StudioLive. All rights reserved.</p>
       </div>
     </footer>
 
     <script type="module" src="/src/main.ts"></script>
     <script>
-      // Initialize icons
       lucide.createIcons();
     </script>
   </body>
