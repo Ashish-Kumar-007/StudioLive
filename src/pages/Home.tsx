@@ -173,87 +173,6 @@ function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
   );
 }
 
-interface ExperienceCardProps {
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-  floatClass: string;
-}
-
-// 3D Parallax Experience Card with Realtime Spotlight Tracking and Organic Float
-function ExperienceCard({ icon, title, desc, floatClass }: ExperienceCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [transformStyle, setTransformStyle] = useState<string>('');
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    setIsHovered(true);
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    // Tilt rotation angles (max 15 degrees)
-    const rotateX = ((centerY - y) / centerY) * 15;
-    const rotateY = ((x - centerX) / centerX) * 15;
-
-    // Spotlight glow cursor mapping
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-
-    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTransformStyle('');
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`group glass p-10 rounded-3xl relative flex flex-col items-center text-center select-none origin-center border border-surface-light overflow-hidden ${
-        isHovered ? 'border-primary/20 shadow-2xl' : floatClass
-      }`}
-      style={{
-        transform: isHovered ? transformStyle : undefined,
-        transformStyle: 'preserve-3d',
-        transition: isHovered ? 'none' : 'transform 0.5s ease-out, border-color 0.5s ease-out, box-shadow 0.5s ease-out',
-        willChange: 'transform'
-      }}
-    >
-      {/* 3D Depth Layer 1 (Icon Wrapper popout) */}
-      <div className="flex flex-col items-center" style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
-        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 shadow-inner transition-transform duration-300 group-hover:scale-110">
-          {icon}
-        </div>
-      </div>
-      
-      {/* 3D Depth Layer 2 (Text Content popout) */}
-      <div style={{ transform: 'translateZ(25px)' }}>
-        <h3 className="text-xl font-bold mb-3 text-primary">{title}</h3>
-        <p className="text-dim text-sm leading-relaxed">{desc}</p>
-      </div>
-
-      {/* Dynamic Cursor Spotlight Radial Overlay */}
-      <div 
-        className="absolute inset-0 rounded-3xl pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.18), transparent 80%)',
-          mixBlendMode: 'overlay'
-        }}
-      />
-    </div>
-  );
-}
-
 export default function Home({ onNavigate }: HomeProps) {
   return (
     <div className="page-content">
@@ -300,28 +219,45 @@ export default function Home({ onNavigate }: HomeProps) {
           We don't just take pictures; we tell your story. Our unobtrusive approach ensures we capture genuine, candid emotions while you simply live in the moment.
         </p>
         
-        {/* Perfectly Aligned 3D Grid container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 reveal" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
-          <ExperienceCard 
-            icon={<Video className="w-8 h-8" />}
-            title="Cinematic Films"
-            desc="Breathtaking storytelling that looks like a Hollywood movie."
-            floatClass="float-3d-exp1"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 experience-grid-container" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
+          <div className="group glass p-10 rounded-3xl reveal experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
+                <Video className="w-8 h-8" />
+              </div>
+            </div>
+            <div style={{ transform: 'translateZ(15px)' }}>
+              <h3 className="text-xl font-bold mb-3 text-primary">Cinematic Films</h3>
+              <p className="text-dim text-sm leading-relaxed">Breathtaking storytelling that looks like a Hollywood movie.</p>
+            </div>
+            <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12), transparent 80%)', mixBlendMode: 'overlay' }} />
+          </div>
           
-          <ExperienceCard 
-            icon={<Camera className="w-8 h-8" />}
-            title="Candid Moments"
-            desc="Unscripted smiles, laughter, and tears preserved forever."
-            floatClass="float-3d-exp2"
-          />
+          <div className="group glass p-10 rounded-3xl reveal experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
+                <Camera className="w-8 h-8" />
+              </div>
+            </div>
+            <div style={{ transform: 'translateZ(15px)' }}>
+              <h3 className="text-xl font-bold mb-3 text-primary">Candid Moments</h3>
+              <p className="text-dim text-sm leading-relaxed">Unscripted smiles, laughter, and tears preserved forever.</p>
+            </div>
+            <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12), transparent 80%)', mixBlendMode: 'overlay' }} />
+          </div>
           
-          <ExperienceCard 
-            icon={<BookOpen className="w-8 h-8" />}
-            title="Fine-Art Albums"
-            desc="Premium Italian-crafted photobooks delivered to your door."
-            floatClass="float-3d-exp3"
-          />
+          <div className="group glass p-10 rounded-3xl reveal experience-card-3d tilt-3d flex flex-col items-center text-center cursor-pointer relative overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+            <div className="flex flex-col items-center" style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}>
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 transition-transform duration-300 group-hover:scale-110 shadow-inner">
+                <BookOpen className="w-8 h-8" />
+              </div>
+            </div>
+            <div style={{ transform: 'translateZ(15px)' }}>
+              <h3 className="text-xl font-bold mb-3 text-primary">Fine-Art Albums</h3>
+              <p className="text-dim text-sm leading-relaxed">Premium Italian-crafted photobooks delivered to your door.</p>
+            </div>
+            <div className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.12), transparent 80%)', mixBlendMode: 'overlay' }} />
+          </div>
         </div>
       </section>
 

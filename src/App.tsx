@@ -45,11 +45,13 @@ export default function App() {
 
   // GSAP scroll trigger re-init whenever page contents change
   useEffect(() => {
+    const cleanups: (() => void)[] = [];
+    
     // Scroll to top instantly on page change (tucked under the cover transition)
     window.scrollTo(0, 0);
 
     // Give react time to render DOM, then initialize ScrollTrigger revelations
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       
       const reveals = document.querySelectorAll('.reveal');
@@ -69,6 +71,86 @@ export default function App() {
             }
           }
         );
+      });
+
+      // 3D Experience Cards staggered swing-in entrance
+      const expCards = document.querySelectorAll('.experience-card-3d');
+      if (expCards.length > 0) {
+        gsap.fromTo(expCards,
+          {
+            opacity: 0,
+            rotationX: -40,
+            rotationY: 10,
+            z: -250,
+            scale: 0.9
+          },
+          {
+            opacity: 1,
+            rotationX: 0,
+            rotationY: 0,
+            z: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+            stagger: 0.15,
+            clearProps: 'transform,opacity',
+            scrollTrigger: {
+              trigger: '.experience-grid-container',
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      }
+
+      // Universal 3D cursor tilt logic with spotlight cursor tracking
+      const tiltCards = document.querySelectorAll('.tilt-3d');
+      tiltCards.forEach((card) => {
+        const element = card as HTMLElement;
+        
+        const onMouseMove = (e: MouseEvent) => {
+          const rect = element.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = ((centerY - y) / centerY) * 12; // Max 12 deg
+          const rotateY = ((x - centerX) / centerX) * 12;
+          
+          element.style.setProperty('--mouse-x', `${x}px`);
+          element.style.setProperty('--mouse-y', `${y}px`);
+          
+          gsap.to(element, {
+            perspective: 1000,
+            rotationX: rotateX,
+            rotationY: rotateY,
+            scale: 1.04,
+            duration: 0.3,
+            ease: 'power2.out',
+            overwrite: 'auto'
+          });
+        };
+        
+        const onMouseLeave = () => {
+          gsap.to(element, {
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+            duration: 0.5,
+            ease: 'power2.out',
+            overwrite: 'auto'
+          });
+        };
+        
+        element.addEventListener('mousemove', onMouseMove);
+        element.addEventListener('mouseleave', onMouseLeave);
+        
+        cleanups.push(() => {
+          element.removeEventListener('mousemove', onMouseMove);
+          element.removeEventListener('mouseleave', onMouseLeave);
+        });
       });
 
       // 3D Testimonials stagger swing!
@@ -102,6 +184,10 @@ export default function App() {
       }
     }, 100);
 
+    return () => {
+      clearTimeout(timerId);
+      cleanups.forEach(cleanup => cleanup());
+    };
   }, [currentPage]);
 
   const handleNavigate = (page: string) => {
