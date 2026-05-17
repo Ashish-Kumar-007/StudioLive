@@ -1,3 +1,8 @@
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 document.addEventListener('DOMContentLoaded', () => {
   // Navigation Background on Scroll
   const nav = document.getElementById('main-nav');
@@ -9,37 +14,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Reveal Animations on Scroll
-  const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
-  };
+  // GSAP Page Load Animation
+  const tl = gsap.timeline();
+  tl.to('.page-transition-overlay', {
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power2.inOut'
+  })
+  .to('.page-content', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: 'power3.out',
+    clearProps: 'all'
+  }, "-=0.3");
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        revealObserver.unobserve(entry.target);
+  // GSAP Scroll Animations (Replacing Intersection Observer)
+  const revealElements = document.querySelectorAll('.reveal');
+  revealElements.forEach((el) => {
+    gsap.fromTo(el, 
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1, 
+        y: 0, 
+        duration: 0.8, 
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
       }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.reveal').forEach(el => {
-    revealObserver.observe(el);
+    );
   });
 
-  // Smooth Scrolling
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = anchor.getAttribute('href');
-      if (targetId === '#' || !targetId) return;
-      
-      const target = document.querySelector(targetId) as HTMLElement;
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 80,
-          behavior: 'smooth'
+  // Page Exit Transitions
+  const navLinks = document.querySelectorAll('a.nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const target = link.getAttribute('href');
+      if (target && !target.startsWith('#') && target !== window.location.pathname) {
+        e.preventDefault();
+        gsap.to('.page-transition-overlay', {
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            window.location.href = target;
+          }
         });
       }
     });
@@ -47,11 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mobile Menu Toggle
   const mobileToggle = document.getElementById('mobile-toggle');
-  const navLinks = document.querySelector('.nav-links');
+  const navMenu = document.querySelector('.nav-links');
   
   mobileToggle?.addEventListener('click', () => {
-    navLinks?.classList.toggle('active');
-    // For a real mobile menu, we'd add more styling here, 
-    // but this is the functional toggle.
+    navMenu?.classList.toggle('active');
   });
 });

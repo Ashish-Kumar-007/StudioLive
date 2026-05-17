@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Story | StudioLive</title>
+    <meta name="description" content="StudioLive streamlines the entire studio pipeline from lead capture to final production delivery. Premium management for photography and videography agencies." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="glass" id="main-nav">
+      <div class="container nav-content">
+        <div class="logo">
+          <a href="/"><span class="logo-studio">STUDIO</span><span class="logo-live">LIVE</span></a>
+        </div>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/about.html" class="nav-link">Our Story</a>
+          <a href="/events.html" class="nav-link">Events</a>
+          <a href="/team.html" class="nav-link">Our Team</a>
+          <a href="/contact.html" class="btn-primary nav-link" id="cta-nav">Book Now</a>
+        </div>
+        <button class="mobile-toggle" id="mobile-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="page-content" style="padding-top: 100px;">
+      <!-- Our Story Section -->
+      <section class="section-padding" id="our-story">
+        <div class="container">
+          <div class="story-grid">
+            <div class="story-visual reveal">
+              <img src="/our-story.png" alt="The StudioLive Team behind the scenes" class="rounded-img">
+            </div>
+            <div class="story-content reveal">
+              <h2 class="gradient-text">Our Story</h2>
+              <h3>Passion for the perfect shot.</h3>
+              <p>StudioLive was founded on a simple belief: every milestone deserves to be remembered beautifully. We are a collective of passionate visual storytellers specializing in weddings and grand functions.</p>
+              <p>What started as a small group of creative friends has grown into a premier studio trusted by hundreds of families. We blend into the background of your event to capture candid, genuine emotion, while stepping up to direct the elegant, cinematic portraits you'll frame for a lifetime.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="glass" style="margin-top: auto;">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <span class="logo-studio">STUDIO</span><span class="logo-live">LIVE</span>
+          </div>          <p>Premium photography and videography for life's greatest moments.</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <h5>Services</h5>
+            <a href="/events.html">Weddings</a>
+            <a href="/events.html">Corporate</a>
+            <a href="/events.html">Parties</a>
+          </div>
+          <div>
+            <h5>Company</h5>
+            <a href="/about.html">Our Story</a>
+            <a href="/team.html">Our Team</a>
+            <a href="/contact.html">Contact Us</a>
+          </div>
+          <div>
+            <h5>Legal</h5>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 StudioLive. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
