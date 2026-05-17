@@ -51,46 +51,30 @@ export const App: React.FC = () => {
           );
         });
 
-        // 2. 3D Unfolding + Zoom-Out Section Reveals
+        // 2. Cinematic Section Zoom-Out Reveals on Scroll
         const sections = gsap.utils.toArray('.reveal-section');
-        sections.forEach((sec: any, index: number) => {
-          const isEven = index % 2 === 0;
-          const initialRotY = isEven ? -45 : 0;
-          const initialRotX = isEven ? 0 : -45;
-          const origin = isEven ? 'left center' : 'center top';
-
-          // Inject 3D perspective to section wrapper
-          gsap.set(sec, {
-            perspective: 1200,
-            transformStyle: 'preserve-3d',
-          });
-
+        sections.forEach((sec: any) => {
           const content = sec.querySelector('.reveal-content') || sec;
 
-          // Initial 3D folded + zoomed-in state
+          // Initial zoomed-in & transparent state
           gsap.set(content, {
-            transformOrigin: origin,
-            rotationY: initialRotY,
-            rotationX: initialRotX,
+            transformOrigin: 'center center',
             opacity: 0,
-            scale: 1.12, // Start zoomed-in for the zoom-out reveal
-            z: -50
+            scale: 1.25, // Start zoomed-in
+            willChange: 'transform, opacity'
           });
 
-          // Scrub 3D unfold hinge + zoom-out on scroll
+          // Smooth scroll-driven zoom-out reveal trigger
           gsap.to(content, {
             scrollTrigger: {
               trigger: sec,
-              start: 'top 90%',
-              end: 'top 35%',
-              scrub: 1,
+              start: 'top 95%', // Starts fading in just as the section enters the bottom of the screen
+              end: 'top 50%',   // Reaches full scale & opacity by mid-screen
+              scrub: 1.2,       // Smooth scrubbing physics
               toggleActions: 'play none none reverse',
             },
-            rotationY: 0,
-            rotationX: 0,
             opacity: 1,
-            scale: 1,
-            z: 0,
+            scale: 1.0,        // Zooms out to default size
             ease: 'power2.out',
           });
         });
