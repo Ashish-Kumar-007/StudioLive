@@ -22,29 +22,31 @@ export default function App() {
   // Entrance transition on first mount
   useEffect(() => {
     if (overlayRef.current) {
-      gsap.to(overlayRef.current, {
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          if (overlayRef.current) overlayRef.current.style.display = 'none';
+      gsap.fromTo(overlayRef.current,
+        { opacity: 1 },
+        {
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            if (overlayRef.current) overlayRef.current.style.display = 'none';
+          }
         }
-      });
+      );
+    }
+
+    if (containerRef.current) {
+      gsap.fromTo(containerRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+      );
     }
   }, []);
 
   // GSAP scroll trigger re-init whenever page contents change
   useEffect(() => {
-    // Scroll to top instantly on page change
+    // Scroll to top instantly on page change (tucked under the cover transition)
     window.scrollTo(0, 0);
-
-    // Subtle page entrance fade + slide upward
-    if (containerRef.current) {
-      gsap.fromTo(containerRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
-      );
-    }
 
     // Give react time to render DOM, then initialize ScrollTrigger revelations
     setTimeout(() => {
@@ -74,30 +76,67 @@ export default function App() {
   const handleNavigate = (page: string) => {
     if (page === currentPage) return;
 
-    if (overlayRef.current) {
-      // 1. Show overlay
+    if (containerRef.current && overlayRef.current) {
+      const tl = gsap.timeline();
+
+      // 1. Enable glossy flare sweep display
       overlayRef.current.style.display = 'block';
-      
-      // 2. Animate overlay to solid covering
-      gsap.to(overlayRef.current, {
-        opacity: 1,
-        duration: 0.4,
-        ease: 'power2.inOut',
+
+      // 2. Shrink active page container backward and tilt in Y-axis
+      tl.to(containerRef.current, {
+        scale: 0.85,
+        rotationY: -45,
+        z: -600,
+        opacity: 0.2,
+        duration: 0.6,
+        ease: 'power2.in',
+        transformPerspective: 1600,
+        transformOrigin: '50% 50%',
         onComplete: () => {
-          // 3. Switch React page state under the cover
+          // 3. Switch React page state under the cover tilt
           setCurrentPage(page);
-          
-          // 4. Animate overlay back to transparency
-          gsap.to(overlayRef.current, {
-            opacity: 0,
-            duration: 0.4,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              if (overlayRef.current) overlayRef.current.style.display = 'none';
+
+          // 4. Animate new page swing into view from opposite rotation
+          gsap.fromTo(containerRef.current,
+            {
+              scale: 0.85,
+              rotationY: 45,
+              z: -600,
+              opacity: 0.2,
+            },
+            {
+              scale: 1,
+              rotationY: 0,
+              z: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              transformPerspective: 1600,
+              transformOrigin: '50% 50%',
             }
-          });
+          );
         }
       });
+
+      // 5. Simultaneously run the glossy reflection sweep to look like gallery photograph lighting!
+      gsap.fromTo(overlayRef.current,
+        {
+          x: '-100%',
+          opacity: 0
+        },
+        {
+          x: '100%',
+          opacity: 0.8,
+          duration: 1.3,
+          ease: 'power2.inOut',
+          onComplete: () => {
+            if (overlayRef.current) {
+              overlayRef.current.style.display = 'none';
+              overlayRef.current.style.opacity = '0';
+            }
+          }
+        }
+      );
     } else {
       setCurrentPage(page);
     }
@@ -122,19 +161,28 @@ export default function App() {
 
   return (
     <div className="bg-background text-primary font-sans antialiased overflow-x-hidden min-h-screen flex flex-col">
-      {/* Dynamic GSAP Page Transition Overlay */}
+      {/* Dynamic GSAP 3D Glossy Light Reflection Overlay */}
       <div 
         ref={overlayRef} 
-        className="page-transition-overlay fixed inset-0 bg-primary z-[9999] pointer-events-none opacity-100"
+        className="fixed inset-0 pointer-events-none z-[9999] opacity-0"
+        style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 30%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.4) 70%, rgba(255,255,255,0) 100%)',
+          width: '200%',
+          height: '100%',
+          transform: 'translateX(-100%) skewX(-30deg)'
+        }}
       />
 
       {/* Shared Navigation */}
       <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
-      {/* Active Page View */}
-      <main ref={containerRef} className="flex-grow pt-16">
-        {renderPage()}
-      </main>
+      {/* 3D Viewport Wrapper */}
+      <div className="perspective-container flex-grow overflow-hidden flex flex-col">
+        {/* Active Page View */}
+        <main ref={containerRef} className="flex-grow pt-16 origin-center">
+          {renderPage()}
+        </main>
+      </div>
 
       {/* Floating WhatsApp desk */}
       <WhatsAppWidget />

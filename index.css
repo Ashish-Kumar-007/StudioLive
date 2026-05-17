@@ -54,6 +54,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* 3D Perspective Viewport Utility */
+.perspective-container {
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
 /* GSAP Specifics */
 .page-transition-overlay {
   position: fixed;
