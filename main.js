@@ -222,18 +222,19 @@ function initAperture() {
   // Reveal the initial home page smoothly on load by sweeping aperture to 150%
   const aperture = document.querySelector('.aperture-overlay');
   if (aperture) {
-    gsap.fromTo(aperture,
-      { '--aperture-radius': '0%' },
-      {
-        '--aperture-radius': '150%',
-        duration: 1.5,
-        ease: 'power3.inOut',
-        onComplete: () => {
-          // Re-init ScrollTrigger reveals
-          initScrollReveals();
-        }
+    const radiusObj = { value: 0 };
+    gsap.to(radiusObj, {
+      value: 150,
+      duration: 1.5,
+      ease: 'power3.inOut',
+      onUpdate: () => {
+        aperture.style.setProperty('--aperture-radius', `${radiusObj.value}%`);
+      },
+      onComplete: () => {
+        // Re-init ScrollTrigger reveals
+        initScrollReveals();
       }
-    );
+    });
   }
 }
 
@@ -245,6 +246,8 @@ function handlePageTransition(targetPageId) {
   
   // Close Lenis wheel and lock scroll during camera swap
   lenis.stop();
+
+  const radiusObj = { value: 150 };
 
   // 1. Sweep camera shutter aperture closed (circle radius 0%)
   const tl = gsap.timeline({
@@ -284,10 +287,16 @@ function handlePageTransition(targetPageId) {
       
       // Delay opening lens shutter to sync with smooth WebGL camera orbit glide
       setTimeout(() => {
-        gsap.to(aperture, {
-          '--aperture-radius': '150%',
+        const reopenObj = { value: 0 };
+        gsap.to(reopenObj, {
+          value: 150,
           duration: 1.4,
           ease: 'power3.inOut',
+          onUpdate: () => {
+            if (aperture) {
+              aperture.style.setProperty('--aperture-radius', `${reopenObj.value}%`);
+            }
+          },
           onComplete: () => {
             isTransitioning = false;
             lenis.start();
@@ -298,10 +307,15 @@ function handlePageTransition(targetPageId) {
     }
   });
 
-  tl.to(aperture, {
-    '--aperture-radius': '0%',
+  tl.to(radiusObj, {
+    value: 0,
     duration: 1.2,
-    ease: 'power3.inOut'
+    ease: 'power3.inOut',
+    onUpdate: () => {
+      if (aperture) {
+        aperture.style.setProperty('--aperture-radius', `${radiusObj.value}%`);
+      }
+    }
   });
 }
 
