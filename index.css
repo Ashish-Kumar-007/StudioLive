@@ -76,6 +76,12 @@ h1, h2, h3, h4 {
   opacity: 1;
 }
 
+/* Hide reveal elements before GSAP loads to prevent flash */
+.reveal {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
