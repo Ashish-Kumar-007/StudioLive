@@ -96,7 +96,16 @@ export const App: React.FC = () => {
 
     requestAnimationFrame(raf);
 
-    // Initial aperture open sweep on load
+    // Lock shutter closed initially so the photos deal out on top of the black mask
+    document.documentElement.style.setProperty('--aperture-radius', '150%');
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  // initial loading finish handler
+  const handleLoadingComplete = () => {
     const radiusObj = { value: 150 };
     gsap.to(radiusObj, {
       value: 0,
@@ -106,11 +115,7 @@ export const App: React.FC = () => {
         document.documentElement.style.setProperty('--aperture-radius', `${radiusObj.value}%`);
       }
     });
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
+  };
 
   // 2. Camera Aperture Lens Shutter Routing Trigger
   const handlePageChange = (newPageId: string) => {
@@ -171,8 +176,8 @@ export const App: React.FC = () => {
       {/* 3D WebGL Canvas Parallax Layer */}
       <ThreeBackground targetCameraPos={targetCameraPos} />
 
-      {/* Shutter Shutter Screen Overlay */}
-      <ApertureLoader />
+      {/* Shutter Shutter Screen Overlay with Polaroid Cascade */}
+      <ApertureLoader onLoadingComplete={handleLoadingComplete} />
 
       {/* Header Sticky Navigation */}
       <Navbar activePage={activePage} onChangePage={handlePageChange} />
