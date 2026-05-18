@@ -165,7 +165,7 @@ html.lenis {
 /* Dual Fixed Stage Light rays */
 .stage-ray-left {
   position: fixed;
-  top: 0;
+  top: 85px; /* bottom-left of top portion of viewport */
   left: 0;
   height: 1px;
   background: linear-gradient(to right, rgba(212, 175, 55, 0.65), rgba(255, 126, 54, 0.08) 75%, transparent);
@@ -175,12 +175,14 @@ html.lenis {
   filter: blur(1.5px);
   width: var(--beam-left-length, 0px);
   transform: rotate(var(--beam-left-angle, 0deg));
-  will-change: transform, width;
+  opacity: var(--stage-opacity, 1);
+  will-change: transform, width, opacity;
+  transition: opacity 0.3s ease;
 }
 
 .stage-ray-right {
   position: fixed;
-  top: 0;
+  top: 85px; /* bottom-right of top portion of viewport */
   left: 100%; /* Originate from top-right corner! */
   height: 1px;
   background: linear-gradient(to right, rgba(212, 175, 55, 0.65), rgba(255, 126, 54, 0.08) 75%, transparent);
@@ -190,7 +192,9 @@ html.lenis {
   filter: blur(1.5px);
   width: var(--beam-right-length, 0px);
   transform: rotate(var(--beam-right-angle, 0deg));
-  will-change: transform, width;
+  opacity: var(--stage-opacity, 1);
+  will-change: transform, width, opacity;
+  transition: opacity 0.3s ease;
 }
 
 /* Dual Spotlight glowing halo rings tracking the active section */
@@ -206,7 +210,9 @@ html.lenis {
   border: 1px solid rgba(212, 175, 55, 0.06);
   z-index: 26;
   pointer-events: none;
-  will-change: transform;
+  opacity: var(--stage-opacity, 1);
+  will-change: transform, opacity;
+  transition: opacity 0.3s ease;
 }
 
 .spotlight-halo-right {
@@ -221,5 +227,7 @@ html.lenis {
   border: 1px solid rgba(212, 175, 55, 0.06);
   z-index: 26;
   pointer-events: none;
-  will-change: transform;
+  opacity: var(--stage-opacity, 1);
+  will-change: transform, opacity;
+  transition: opacity 0.3s ease;
 }

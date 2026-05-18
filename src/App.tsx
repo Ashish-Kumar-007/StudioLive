@@ -60,11 +60,12 @@ export const App: React.FC = () => {
     const canvas = document.getElementById('spotlight-canvas') as HTMLCanvasElement;
     if (!canvas) return;
 
-    // Eased coordinates local states
+    // Eased coordinates & opacity local states
     let currentLeftX = window.innerWidth * 0.35;
     let currentLeftY = window.innerHeight * 0.5;
     let currentRightX = window.innerWidth * 0.65;
     let currentRightY = window.innerHeight * 0.5;
+    let currentOpacity = 0;
 
     const solveDualSpotlights = () => {
       const sections = document.querySelectorAll('.reveal-section');
@@ -85,18 +86,27 @@ export const App: React.FC = () => {
         }
       });
 
+      // Target opacity scales to 0 if we scroll past all sections or if no section is active near viewport center
+      let targetOpacity = 0;
+      if (activeSec && minDistance < window.innerHeight * 0.75) {
+        targetOpacity = 1;
+      }
+
+      // Smoothly interpolate opacity state with 0.08 easing factor
+      currentOpacity += (targetOpacity - currentOpacity) * 0.08;
+
       if (activeSec) {
         const rect = (activeSec as Element).getBoundingClientRect();
         const secCenterX = rect.left + rect.width / 2;
         const secCenterY = rect.top + rect.height / 2;
 
-        // Stage-setup dual offset targets (spots slightly overlap for premium theatrical intersection)
+        // Stage-setup dual offset targets (spots always synchronize to the same active section in absolute unison)
         const targetLeftX = secCenterX - 75;
         const targetLeftY = secCenterY;
         const targetRightX = secCenterX + 75;
         const targetRightY = secCenterY;
 
-        // Fluid 0.08 eased interpolation
+        // Fluid 0.08 eased coordinate interpolation
         currentLeftX += (targetLeftX - currentLeftX) * 0.08;
         currentLeftY += (targetLeftY - currentLeftY) * 0.08;
         currentRightX += (targetRightX - currentRightX) * 0.08;
@@ -116,58 +126,61 @@ export const App: React.FC = () => {
           ctx.fillStyle = 'rgba(7, 9, 14, 0.88)';
           ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-          // 2. Set blend composite mode to carve transparent holes
-          ctx.globalCompositeOperation = 'destination-out';
+          // 2. Cut holes only if there is visible spotlight alpha
+          if (currentOpacity > 0.001) {
+            ctx.globalCompositeOperation = 'destination-out';
 
-          const radius = 300; // 300px spotlight radius
+            const radius = 300; // Constant spotlight size throughout scroll
 
-          // 3. Draw Left spotlight radial gradient
-          const leftGrad = ctx.createRadialGradient(
-            currentLeftX, currentLeftY, 0,
-            currentLeftX, currentLeftY, radius
+            // 3. Draw Left spotlight radial gradient
+            const leftGrad = ctx.createRadialGradient(
+              currentLeftX, currentLeftY, 0,
+              currentLeftX, currentLeftY, radius
           );
-          leftGrad.addColorStop(0, 'rgba(0, 0, 0, 1)');
-          leftGrad.addColorStop(0.55, 'rgba(0, 0, 0, 1)');
-          leftGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-          ctx.fillStyle = leftGrad;
-          ctx.beginPath();
-          ctx.arc(currentLeftX, currentLeftY, radius, 0, Math.PI * 2);
-          ctx.fill();
+            leftGrad.addColorStop(0, `rgba(0, 0, 0, ${currentOpacity})`);
+            leftGrad.addColorStop(0.55, `rgba(0, 0, 0, ${currentOpacity})`);
+            leftGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = leftGrad;
+            ctx.beginPath();
+            ctx.arc(currentLeftX, currentLeftY, radius, 0, Math.PI * 2);
+            ctx.fill();
 
-          // 4. Draw Right spotlight radial gradient
-          const rightGrad = ctx.createRadialGradient(
-            currentRightX, currentRightY, 0,
-            currentRightX, currentRightY, radius
-          );
-          rightGrad.addColorStop(0, 'rgba(0, 0, 0, 1)');
-          rightGrad.addColorStop(0.55, 'rgba(0, 0, 0, 1)');
-          rightGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-          ctx.fillStyle = rightGrad;
-          ctx.beginPath();
-          ctx.arc(currentRightX, currentRightY, radius, 0, Math.PI * 2);
-          ctx.fill();
+            // 4. Draw Right spotlight radial gradient
+            const rightGrad = ctx.createRadialGradient(
+              currentRightX, currentRightY, 0,
+              currentRightX, currentRightY, radius
+            );
+            rightGrad.addColorStop(0, `rgba(0, 0, 0, ${currentOpacity})`);
+            rightGrad.addColorStop(0.55, `rgba(0, 0, 0, ${currentOpacity})`);
+            rightGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = rightGrad;
+            ctx.beginPath();
+            ctx.arc(currentRightX, currentRightY, radius, 0, Math.PI * 2);
+            ctx.fill();
 
-          // Reset composite mode standardly
-          ctx.globalCompositeOperation = 'source-over';
+            // Reset composite mode standardly
+            ctx.globalCompositeOperation = 'source-over';
+          }
         }
 
-        // 5. Update CSS custom variables for stage-light rays and glow halos
+        // 5. Update CSS custom variables for stage-light rays, halos, and global opacity
+        document.documentElement.style.setProperty('--stage-opacity', `${currentOpacity}`);
         document.documentElement.style.setProperty('--spotlight-left-x', `${currentLeftX}px`);
         document.documentElement.style.setProperty('--spotlight-left-y', `${currentLeftY}px`);
         document.documentElement.style.setProperty('--spotlight-right-x', `${currentRightX}px`);
         document.documentElement.style.setProperty('--spotlight-right-y', `${currentRightY}px`);
 
-        // Compute left ray trigonometry originating from top-left (0,0)
+        // Compute left ray trigonometry originating from bottom-left of top area (0, 85px)
         const dxL = currentLeftX - 0;
-        const dyL = currentLeftY - 0;
+        const dyL = currentLeftY - 85;
         const lenL = Math.sqrt(dxL * dxL + dyL * dyL);
         const angL = Math.atan2(dyL, dxL) * (180 / Math.PI);
         document.documentElement.style.setProperty('--beam-left-length', `${lenL}px`);
         document.documentElement.style.setProperty('--beam-left-angle', `${angL}deg`);
 
-        // Compute right ray trigonometry originating from top-right (window.innerWidth, 0)
+        // Compute right ray trigonometry originating from bottom-right of top area (window.innerWidth, 85px)
         const dxR = currentRightX - window.innerWidth;
-        const dyR = currentRightY - 0;
+        const dyR = currentRightY - 85;
         const lenR = Math.sqrt(dxR * dxR + dyR * dyR);
         const angR = Math.atan2(dyR, dxR) * (180 / Math.PI);
         document.documentElement.style.setProperty('--beam-right-length', `${lenR}px`);

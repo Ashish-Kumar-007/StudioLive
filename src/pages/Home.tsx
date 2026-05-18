@@ -177,7 +177,7 @@ export default function Home({ onNavigate }: HomeProps) {
       {/* Full Bleed Cinematic Hero Section */}
       <section className="reveal-section relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="home">
         <div className="absolute inset-0 z-0">
-          <img src="/wedding-hero.png" alt="Cinematic Wedding Photography" className="w-full h-full object-cover opacity-20" />
+          <img src="https://picsum.photos/1920/1080?random=1" alt="Cinematic Wedding Photography" className="w-full h-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
         </div>
 
@@ -213,9 +213,17 @@ export default function Home({ onNavigate }: HomeProps) {
       {/* The StudioLive Experience */}
       <section className="reveal-section min-h-screen flex flex-col justify-center py-32 px-6 max-w-7xl mx-auto text-center">
         <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-6">The StudioLive Experience</h2>
-        <p className="text-dim text-lg max-w-3xl mx-auto mb-16">
+        <p className="text-dim text-lg max-w-3xl mx-auto mb-12">
           We don't just take pictures; we tell your story. Our unobtrusive approach ensures we capture genuine, candid emotions while you simply live in the moment.
         </p>
+        
+        {/* Cinematic Theatrical Stage Setup Showcase Image */}
+        <div className="mb-16 max-w-4xl mx-auto rounded-3xl overflow-hidden border border-primary/10 shadow-2xl relative reveal">
+          <img src="https://picsum.photos/1200/500?random=2" alt="Creative Theatrical Stage Setup" className="w-full h-auto max-h-[300px] object-cover opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent flex items-end justify-center p-6">
+            <p className="text-xs font-semibold tracking-widest text-primary uppercase">Candid Storytelling Showcase</p>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="glass p-10 rounded-2xl reveal flex flex-col items-center text-center">
@@ -287,28 +295,28 @@ export default function Home({ onNavigate }: HomeProps) {
           {/* Perfectly Aligned 3D Grid container */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 reveal" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
             <LoveStoryCard
-              img="/cat-wedding.png"
+              img="https://picsum.photos/800/600?random=3"
               title="Riya & Vikram"
               desc="Royal Jaipur Wedding"
               onClick={() => onNavigate('events')}
             />
 
             <LoveStoryCard
-              img="/cat-prewedding.png"
+              img="https://picsum.photos/800/600?random=4"
               title="Ananya & Rahul"
               desc="Goa Pre-Wedding"
               onClick={() => onNavigate('events')}
             />
 
             <LoveStoryCard
-              img="/cat-party.png"
+              img="https://picsum.photos/800/600?random=5"
               title="Sangeet Night"
               desc="Candid Expressions"
               onClick={() => onNavigate('events')}
             />
 
             <LoveStoryCard
-              img="/our-story.png"
+              img="https://picsum.photos/800/600?random=6"
               title="Pooja & Karan"
               desc="Intimate Portraits"
               onClick={() => onNavigate('events')}
@@ -323,7 +331,15 @@ export default function Home({ onNavigate }: HomeProps) {
 
       {/* Words of Love (Testimonials) in Dynamic 3D with Organic Auto-Bobbing */}
       <section className="reveal-section min-h-screen flex flex-col justify-center testimonials-section-3d py-32 px-6 max-w-7xl mx-auto text-center overflow-hidden">
-        <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-20 reveal">Words of Love</h2>
+        <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-12 reveal">Words of Love</h2>
+        
+        {/* Testimonials Theatrical Backdrop Image Showcase */}
+        <div className="mb-16 max-w-4xl mx-auto rounded-3xl overflow-hidden border border-primary/10 shadow-2xl relative reveal">
+          <img src="https://picsum.photos/1200/500?random=7" alt="Generations of Loved Stories" className="w-full h-auto max-h-[300px] object-cover opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent flex items-end justify-center p-6">
+            <p className="text-xs font-semibold tracking-widest text-primary uppercase">Generations of Trusted Excellence</p>
+          </div>
+        </div>
 
         {/* 3D Perspective container wrapper */}
         <div
@@ -356,7 +372,10 @@ export default function Home({ onNavigate }: HomeProps) {
 
       {/* Massive Footer CTA */}
       <section className="reveal-section min-h-screen flex flex-col justify-center bg-primary text-white py-32 px-6 text-center relative overflow-hidden reveal">
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <div className="absolute inset-0 z-0">
+          <img src="https://picsum.photos/1920/1080?random=8" alt="Wedding Legacy CTA" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+        </div>
         <div className="relative z-10 max-w-3xl mx-auto">
           <h2 className="text-editorial text-5xl md:text-6xl mb-6">Ready to tell your story?</h2>
           <p className="text-xl text-white/80 mb-12">
