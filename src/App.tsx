@@ -64,7 +64,7 @@ export const App: React.FC = () => {
             willChange: 'transform, opacity'
           });
 
-          // Smooth scroll-driven zoom-out reveal trigger
+          // Smooth scroll-driven zoom-out reveal trigger with projector lens tick
           gsap.to(content, {
             scrollTrigger: {
               trigger: sec,
@@ -72,6 +72,13 @@ export const App: React.FC = () => {
               end: 'top 50%',   // Reaches full scale & opacity by mid-screen
               scrub: 1.2,       // Smooth scrubbing physics
               toggleActions: 'play none none reverse',
+              onEnter: () => {
+                // Flash the screen briefly to mimic a slide projector tick
+                gsap.fromTo('.carousel-flash', 
+                  { opacity: 0.22 },
+                  { opacity: 0, duration: 0.2, ease: 'power2.out' }
+                );
+              }
             },
             opacity: 1,
             scale: 1.0,        // Zooms out to default size
@@ -181,19 +188,68 @@ export const App: React.FC = () => {
       {/* 3D WebGL Canvas Parallax Layer */}
       <ThreeBackground targetCameraPos={targetCameraPos} />
 
+      {/* Analog celluloid film grain moving noise */}
+      <div className="film-grain" />
+
+      {/* Projector click flash transition */}
+      <div className="carousel-flash" />
+
+      {/* 🎞️ FIXED PROJECTOR SIDEBAR (Left) */}
+      <div className="projector-sidebar fixed left-0 top-0 h-screen w-[22%] z-40 bg-bgDark border-r border-goldPrimary/10 flex flex-col justify-center items-center max-lg:hidden">
+        
+        {/* Retro Projector Reels Container */}
+        <div className="relative w-44 h-44 flex items-center justify-center mb-8">
+          {/* Upper Reel */}
+          <div className="absolute top-2 left-6 w-16 h-16 rounded-full border-2 border-dashed border-goldPrimary/30 flex items-center justify-center reel-spin-slow">
+            <div className="w-12 h-[1px] bg-goldPrimary/30 absolute" />
+            <div className="w-[1px] h-12 bg-goldPrimary/30 absolute" />
+            <div className="w-3 h-3 rounded-full bg-goldPrimary/20 absolute" />
+          </div>
+          
+          {/* Lower Reel */}
+          <div className="absolute bottom-2 right-6 w-20 h-20 rounded-full border-2 border-dashed border-goldPrimary/30 flex items-center justify-center reel-spin-fast">
+            <div className="w-16 h-[1px] bg-goldPrimary/30 absolute" />
+            <div className="w-[1px] h-16 bg-goldPrimary/30 absolute" />
+            <div className="w-4 h-4 rounded-full bg-goldPrimary/20 absolute" />
+          </div>
+          
+          {/* Projector Body */}
+          <div className="w-24 h-16 bg-surfaceDark border border-goldPrimary/20 rounded-lg z-10 flex items-center justify-center shadow-goldGlow/10 relative">
+            {/* Projector dials */}
+            <div className="w-2 h-2 rounded-full bg-goldPrimary/40 absolute bottom-2 left-2 animate-pulse" />
+            <div className="w-3 h-3 rounded-full border border-goldPrimary/30 absolute bottom-2 left-6" />
+            {/* Projector Lens with glowing pulsating focal point */}
+            <div className="absolute -right-3 top-4 w-4 h-8 bg-goldPrimary/30 border border-goldPrimary/40 rounded-r-md flex items-center justify-center">
+              <div className="w-2 h-5 bg-white/90 rounded-r-sm shadow-goldGlow animate-pulse" />
+            </div>
+          </div>
+        </div>
+
+        {/* Projector Indicators */}
+        <div className="text-center font-mono text-[9px] tracking-[0.25em] text-goldPrimary/60 uppercase">
+          <span className="text-saffronPrimary animate-ping inline-block mr-2 text-[7px] -translate-y-0.5">●</span>
+          Projecting Film
+        </div>
+      </div>
+
+      {/* 🔦 PROJECTOR LIGHT CONE BEAM */}
+      <div className="fixed left-[22%] top-0 h-screen right-0 z-0 pointer-events-none overflow-hidden max-lg:left-0">
+        <div className="projection-beam-cone" />
+      </div>
+
       {/* Shutter Shutter Screen Overlay with Polaroid Cascade */}
       <ApertureLoader onLoadingComplete={handleLoadingComplete} />
 
       {/* Header Sticky Navigation */}
       <Navbar activePage={activePage} onChangePage={handlePageChange} />
 
-      {/* Core Virtual Content Container */}
-      <main className="relative z-10 w-full pt-[85px]">
+      {/* Core Virtual Content Container shifted inside the projected space */}
+      <main className="relative z-10 w-full lg:pl-[22%] pt-[85px]">
         {renderActivePage()}
+        
+        {/* Brand Footer nested inside the projected offset */}
+        <Footer onChangePage={handlePageChange} />
       </main>
-
-      {/* Brand Footer */}
-      <Footer onChangePage={handlePageChange} />
 
     </div>
   );

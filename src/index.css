@@ -189,3 +189,71 @@ html.lenis {
 .nav-links a.active::after, .nav-links a:hover::after {
   width: 100%;
 }
+
+/* Cinematic celluloid moving film grain */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url('https://media.giphy.com/media/oEI8T98so5744/giphy.gif');
+  background-size: cover;
+}
+
+/* Glowing Projector Lens Beam gradient cone */
+.projection-beam-cone {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 150%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at left center,
+    rgba(212, 175, 55, 0.16) 0%,
+    rgba(255, 126, 54, 0.05) 45%,
+    transparent 80%
+  );
+  transform: translateY(-50%);
+  clip-path: polygon(0 48%, 100% 0, 100% 100%, 0 52%);
+  filter: blur(25px);
+  pointer-events: none;
+  animation: beamFlicker 8s infinite alternate;
+}
+
+@keyframes beamFlicker {
+  0% { opacity: 0.88; }
+  25% { opacity: 0.94; }
+  50% { opacity: 0.84; }
+  75% { opacity: 0.98; }
+  100% { opacity: 0.90; }
+}
+
+/* Spinner anim for projector reels */
+@keyframes spinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.reel-spin-slow {
+  animation: spinClockwise 12s linear infinite;
+}
+
+.reel-spin-fast {
+  animation: spinCounterClockwise 8s linear infinite;
+}
+
+/* Projection Shutter Slide Carousel Flash tick */
+.carousel-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: white;
+  pointer-events: none;
+  opacity: 0;
+}
