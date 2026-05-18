@@ -93,6 +93,83 @@ export const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, [activePage]);
 
+  // 3. Cinematic Spotlight and Laser Tracking Ray Frame Loop
+  useEffect(() => {
+    let animFrameId: number;
+
+    // Local state to keep track of current spotlight position for ease interpolation
+    let currentX = window.innerWidth * 0.6;
+    let currentY = window.innerHeight * 0.5;
+
+    const solveSpotlight = () => {
+      const sections = document.querySelectorAll('.reveal-section');
+      if (sections.length === 0) return;
+
+      let activeSec: Element | null = null;
+      let minDistance = Infinity;
+
+      // Find the section closest to the vertical center of the screen
+      sections.forEach((sec) => {
+        const rect = sec.getBoundingClientRect();
+        const secCenter = rect.top + rect.height / 2;
+        const viewCenter = window.innerHeight / 2;
+        const distance = Math.abs(secCenter - viewCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeSec = sec;
+        }
+      });
+
+      if (activeSec) {
+        const rect = (activeSec as Element).getBoundingClientRect();
+        // Spotlight center coordinate relative to viewport
+        const secCenterX = rect.left + rect.width / 2;
+        const secCenterY = rect.top + rect.height / 2;
+
+        // Target coordinates
+        const targetX = secCenterX;
+        const targetY = secCenterY;
+
+        // Eased interpolation (factor 0.08 for premium high-fidelity drag lag)
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+
+        // Update css custom variables on document root
+        document.documentElement.style.setProperty('--spotlight-x', `${currentX}px`);
+        document.documentElement.style.setProperty('--spotlight-y', `${currentY}px`);
+
+        // Compute Projector source (lens sits at x=22% of screen, y=50% of screen)
+        const isDesktop = window.innerWidth >= 1024;
+        const x0 = isDesktop ? window.innerWidth * 0.22 : 0;
+        const y0 = window.innerHeight * 0.5;
+
+        // Update ray source position variables
+        document.documentElement.style.setProperty('--ray-source-x', `${x0}px`);
+        document.documentElement.style.setProperty('--ray-source-y', `${y0}px`);
+
+        // Distance and Angle between source lens and active spotlight center
+        const dx = currentX - x0;
+        const dy = currentY - y0;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+        document.documentElement.style.setProperty('--beam-ray-length', `${length}px`);
+        document.documentElement.style.setProperty('--beam-ray-angle', `${angle}deg`);
+      }
+    };
+
+    const loop = () => {
+      solveSpotlight();
+      animFrameId = requestAnimationFrame(loop);
+    };
+
+    animFrameId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animFrameId);
+    };
+  }, [activePage]);
+
   // 1. Initialize Lenis Smooth Scrolling
   useEffect(() => {
     const lenis = new Lenis({
@@ -187,6 +264,15 @@ export const App: React.FC = () => {
       
       {/* 3D WebGL Canvas Parallax Layer */}
       <ThreeBackground targetCameraPos={targetCameraPos} />
+
+      {/* Cinematic Spotlight Punch-Through Mask Overlay */}
+      <div className="spotlight-mask-overlay" />
+
+      {/* Dynamic Gold-Saffron Projector Laser Ray */}
+      <div className="projector-beam-ray max-lg:hidden" />
+
+      {/* Gold Feathered Spotlight Halo Glow ring */}
+      <div className="spotlight-halo max-lg:hidden" />
 
       {/* Analog celluloid film grain moving noise */}
       <div className="film-grain" />

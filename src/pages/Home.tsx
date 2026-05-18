@@ -115,11 +115,11 @@ export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
     <div className="w-full">
       
       {/* HERO SECTION */}
-      <section className="hero-sec h-screen flex items-center justify-center text-center pt-[85px] relative">
+      <section className="reveal-section hero-sec h-screen flex items-center justify-center text-center pt-[85px] relative">
         {/* Parallax Scaling background backplate */}
         <div className="hero-bg" />
         
-        <div className="max-w-[900px] px-5 z-10 flex flex-col items-center">
+        <div className="reveal-content max-w-[900px] px-5 z-10 flex flex-col items-center relative z-10">
           <p className="text-sm font-semibold tracking-[0.4em] uppercase text-goldPrimary mb-5">
             A Heritage of Love & Light
           </p>

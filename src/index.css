@@ -265,3 +265,57 @@ html.lenis {
     will-change: transform, clip-path;
   }
 }
+
+/* Cinematic Spotlight Punch-Through Overlay with feathered margins */
+.spotlight-mask-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background-color: rgba(7, 9, 14, 0.88); /* Beautiful near-black dark overlay */
+  -webkit-mask-image: radial-gradient(
+    circle var(--spotlight-radius, 320px) at var(--spotlight-x, 60%) var(--spotlight-y, 50%),
+    transparent 0%,
+    transparent 55%,
+    black 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--spotlight-radius, 320px) at var(--spotlight-x, 60%) var(--spotlight-y, 50%),
+    transparent 0%,
+    transparent 55%,
+    black 100%
+  );
+  will-change: mask-image, -webkit-mask-image;
+}
+
+/* Glowing laser ray connecting projector lens to spotlight center */
+.projector-beam-ray {
+  position: fixed;
+  top: var(--ray-source-y, 50%);
+  left: var(--ray-source-x, 22%);
+  height: 1px;
+  background: linear-gradient(to right, rgba(212, 175, 55, 0.75), rgba(255, 126, 54, 0.12) 80%, transparent);
+  transform-origin: left center;
+  z-index: 24;
+  pointer-events: none;
+  filter: blur(1.5px);
+  width: var(--beam-ray-length, 0px);
+  transform: rotate(var(--beam-ray-angle, 0deg));
+  will-change: transform, width;
+}
+
+/* Outer spotlight halo border glow */
+.spotlight-halo {
+  position: fixed;
+  width: calc(var(--spotlight-radius, 320px) * 2);
+  height: calc(var(--spotlight-radius, 320px) * 2);
+  top: 0;
+  left: 0;
+  transform: translate(calc(var(--spotlight-x, 60%) - var(--spotlight-radius, 320px)), calc(var(--spotlight-y, 50%) - var(--spotlight-radius, 320px)));
+  border-radius: 50%;
+  box-shadow: 0 0 80px rgba(212, 175, 55, 0.22);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+  z-index: 26;
+  pointer-events: none;
+  will-change: transform;
+}
