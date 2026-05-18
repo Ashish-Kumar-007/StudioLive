@@ -257,3 +257,11 @@ html.lenis {
   pointer-events: none;
   opacity: 0;
 }
+
+/* Diagonal visual light masking for the projected screen */
+@media (min-width: 1024px) {
+  .projected-screen {
+    clip-path: polygon(0 48%, 100% 0, 100% 100%, 0 52%);
+    will-change: transform, clip-path;
+  }
+}

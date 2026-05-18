@@ -195,7 +195,7 @@ export const App: React.FC = () => {
       <div className="carousel-flash" />
 
       {/* 🎞️ FIXED PROJECTOR SIDEBAR (Left) */}
-      <div className="projector-sidebar fixed left-0 top-0 h-screen w-[22%] z-40 bg-bgDark border-r border-goldPrimary/10 flex flex-col justify-center items-center max-lg:hidden">
+      <div className="projector-sidebar fixed left-0 top-0 h-screen w-[22%] z-40 bg-transparent flex flex-col justify-center items-center max-lg:hidden">
         
         {/* Retro Projector Reels Container */}
         <div className="relative w-44 h-44 flex items-center justify-center mb-8">
@@ -244,7 +244,7 @@ export const App: React.FC = () => {
       <Navbar activePage={activePage} onChangePage={handlePageChange} />
 
       {/* Core Virtual Content Container shifted inside the projected space */}
-      <main className="relative z-10 w-full lg:pl-[22%] pt-[85px]">
+      <main className="relative z-10 w-full lg:pl-[22%] pt-[85px] projected-screen">
         {renderActivePage()}
         
         {/* Brand Footer nested inside the projected offset */}
