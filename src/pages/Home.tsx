@@ -1,321 +1,375 @@
-import React from 'react';
-import gsap from 'gsap';
-import { ArrowRight, PlayCircle, Image, Video, Sparkles, Camera, Users, Calendar } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Calendar, Video, Camera, BookOpen, Quote } from 'lucide-react';
 
 interface HomeProps {
-  onChangePage: (pageId: string) => void;
+  onNavigate: (page: string) => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ onChangePage }) => {
-  
-  React.useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Background Image zoom-out on scroll
-      gsap.fromTo(".hero-bg",
-        { scale: 1.25 },
-        {
-          scale: 1.0,
-          scrollTrigger: {
-            trigger: ".hero-sec",
-            start: "top top",
-            end: "bottom top",
-            scrub: true
-          }
-        }
-      );
-    });
-    return () => ctx.revert();
-  }, []);
+interface TestimonialCardProps {
+  quote: string;
+  author: string;
+  location: string;
+  isPrimary?: boolean;
+  floatClass: string;
+}
 
-  const stories = [
-    {
-      title: "Ananya & Kabir",
-      desc: "An elegant 3-day royal heritage wedding inside Jaipur's historic palace halls, captured in vibrant cinematic clarity.",
-      tag: "Royal Palace",
-      linkText: "View Film",
-      icon: <PlayCircle size={18} />,
-      img: "https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-      title: "Riya & Dev",
-      desc: "A dreamy sun-kissed twilight pre-wedding showreel capturing intimate whispers along Udaipur's serene lakes.",
-      tag: "Lakeside Dream",
-      linkText: "View Gallery",
-      icon: <Image size={18} />,
-      img: "https://images.unsplash.com/photo-1595878715977-2e8f8df6392e?q=80&w=600&auto=format&fit=crop"
-    },
-    {
-      title: "Meera & Rohan",
-      desc: "High-octane dance choreographies, dynamic strobe lighting, and candid moments frozen inside a lively ballroom.",
-      tag: "Sangeet Beats",
-      linkText: "View Gallery",
-      icon: <Image size={18} />,
-      img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600&auto=format&fit=crop"
-    }
-  ];
+// 3D Parallax Testimonial Card with Organic Auto-Bobbing Drift
+function TestimonialCard({ quote, author, location, isPrimary = false, floatClass }: TestimonialCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [transformStyle, setTransformStyle] = useState<string>('');
 
-  const features = [
-    {
-      title: "8K Cinematography",
-      desc: "Hollywood-grade camera setups, premium lens sweeps, and theatrical grading.",
-      icon: <Video size={24} />
-    },
-    {
-      title: "Virtual Projection",
-      desc: "Immersive custom 3D backdrops and ambient light integration on set.",
-      icon: <Sparkles size={24} />
-    },
-    {
-      title: "Fine-Art Books",
-      desc: "Premium handcrafted leather-bound wedding albums made in Italy.",
-      icon: <Camera size={24} />
-    },
-    {
-      title: "Direction Free",
-      desc: "Silent, non-intrusive lenses capturing real tearful, joyous glances.",
-      icon: <Users size={24} />
-    }
-  ];
-
-  // Real-time Interactive 3D Card Parallax Tilt Event Handlers
-  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    setIsHovered(true);
+    const card = cardRef.current;
     const rect = card.getBoundingClientRect();
+
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    
-    // Rotate relative to cursor offset (up to 12 degrees max)
-    const rotateX = -((y - centerY) / centerY) * 12;
+
+    // Responsive 3D tilt tracking the mouse
+    const rotateX = ((centerY - y) / centerY) * 12;
     const rotateY = ((x - centerX) / centerX) * 12;
 
-    gsap.to(card, {
-      rotationX: rotateX,
-      rotationY: rotateY,
-      scale: 1.03,
-      duration: 0.35,
-      ease: 'power2.out',
-      transformPerspective: 1000,
-    });
+    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
   };
 
-  const handleCardMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    gsap.to(card, {
-      rotationX: 0,
-      rotationY: 0,
-      scale: 1,
-      duration: 0.55,
-      ease: 'power2.out',
-    });
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTransformStyle('');
   };
 
   return (
-    <div className="w-full">
-      
-      {/* HERO SECTION */}
-      <section className="reveal-section hero-sec h-screen flex items-center justify-center text-center pt-[85px] relative">
-        {/* Parallax Scaling background backplate */}
-        <div className="hero-bg" />
-        
-        <div className="reveal-content max-w-[900px] px-5 z-10 flex flex-col items-center relative z-10">
-          <p className="text-sm font-semibold tracking-[0.4em] uppercase text-goldPrimary mb-5">
-            A Heritage of Love & Light
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`testimonial-card-3d rounded-3xl p-8 relative text-left select-none origin-center ${isHovered ? '' : floatClass
+        } ${isPrimary
+          ? 'bg-primary text-white shadow-2xl border border-white/10'
+          : 'bg-background text-primary border border-surface-light hover:border-primary/20 shadow-lg'
+        }`}
+      style={{
+        transform: isHovered ? transformStyle : undefined,
+        transformStyle: 'preserve-3d',
+        transition: isHovered ? 'none' : 'transform 0.5s ease-out',
+        willChange: 'transform'
+      }}
+    >
+      {/* 3D Depth Parallax Content Layer */}
+      <div style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }}>
+        <Quote className={`w-8 h-8 mb-6 ${isPrimary ? 'text-white/20' : 'text-primary/20'}`} />
+        <p className={`text-editorial text-xl leading-relaxed mb-8 ${isPrimary ? 'text-white' : 'text-primary'}`}>
+          {quote}
+        </p>
+        <p className={`font-bold tracking-widest uppercase text-xs ${isPrimary ? 'text-white/70' : 'text-dim'}`}>
+          {author}<br />
+          <span className={`font-normal text-xs ${isPrimary ? 'text-white/50' : 'text-primary/60'}`}>
+            {location}
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+interface LoveStoryCardProps {
+  img: string;
+  title: string;
+  desc: string;
+  onClick: () => void;
+}
+
+// Peak 3D Parallax Love Story Card with Depth Shifting Holographic Parallax
+function LoveStoryCard({ img, title, desc, onClick }: LoveStoryCardProps) {
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [transformStyle, setTransformStyle] = useState<string>('');
+  const [imgStyle, setImgStyle] = useState<string>('scale(1.05) translate3d(0,0,0)');
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!cardRef.current) return;
+    setIsHovered(true);
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Card frame rotations (max 10 degrees)
+    const rotateX = ((centerY - y) / centerY) * 10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    // Image offset parallax shifts (opposite of mouse tilt to give volumetric 3D look!)
+    const imgX = ((centerX - x) / centerX) * 8;
+    const imgY = ((centerY - y) / centerY) * 8;
+
+    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
+    setImgStyle(`scale(1.15) translate3d(${imgX}px, ${imgY}px, 0px)`);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTransformStyle('');
+    setImgStyle('scale(1.05) translate3d(0,0,0)');
+  };
+
+  return (
+    <button
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+      className="group rounded-3xl overflow-hidden relative border-0 p-0 text-left cursor-pointer w-full shadow-lg aspect-[4/3] transition-all duration-300"
+      style={{
+        transform: isHovered ? transformStyle : undefined,
+        transformStyle: 'preserve-3d',
+        transition: isHovered ? 'none' : 'transform 0.5s ease-out, box-shadow 0.5s ease-out',
+        boxShadow: isHovered ? '0 25px 50px -12px rgba(48, 54, 79, 0.4)' : '0 10px 15px -3px rgba(48, 54, 79, 0.1)',
+        willChange: 'transform'
+      }}
+    >
+      {/* 3D Depth Shrunk Parallax Image Frame */}
+      <div className="absolute inset-0 overflow-hidden" style={{ transform: 'translateZ(-12px)' }}>
+        <img
+          src={img}
+          alt={title}
+          className="w-full h-full object-cover"
+          style={{
+            transform: imgStyle,
+            transition: isHovered ? 'none' : 'transform 0.5s ease-out',
+            willChange: 'transform'
+          }}
+        />
+      </div>
+
+      {/* Glossy Spot Flare Sweep Overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%)',
+          transform: isHovered ? 'translateZ(10px)' : undefined
+        }}
+      />
+
+      {/* Floating Card Content Layer */}
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent flex flex-col justify-end p-8 z-20"
+        style={{ transform: 'translateZ(30px)', transformStyle: 'preserve-3d' }}
+      >
+        <h3 className="text-editorial text-white text-3xl mb-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{title}</h3>
+        <p className="text-white/80 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">{desc}</p>
+      </div>
+    </button>
+  );
+}
+
+export default function Home({ onNavigate }: HomeProps) {
+  return (
+    <div className="page-content">
+      {/* Full Bleed Cinematic Hero Section */}
+      <section className="reveal-section relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="home">
+        <div className="absolute inset-0 z-0">
+          <img src="/wedding-hero.png" alt="Cinematic Wedding Photography" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          <div className="reveal">
+            <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-bold tracking-widest uppercase">
+              Capturing Life's Best Moments
+            </div>
+            <h1 className="text-editorial text-5xl md:text-7xl lg:text-8xl text-primary mb-6 leading-tight">
+              Capturing Love<br />& Timeless Moments.
+            </h1>
+            <p className="text-lg md:text-xl text-dim max-w-2xl mx-auto mb-10">
+              StudioLive provides premium, candid photography and cinematic films for your special days. Relive your magic over and over.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                onClick={() => onNavigate('contact')}
+                className="btn-primary border-0 cursor-pointer"
+              >
+                Check Availability <Calendar className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => onNavigate('events')}
+                className="px-8 py-3 rounded-full border border-primary/30 font-semibold bg-transparent text-primary hover:bg-primary/5 transition-colors cursor-pointer"
+              >
+                View Gallery
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* The StudioLive Experience */}
+      <section className="reveal-section min-h-screen flex flex-col justify-center py-32 px-6 max-w-7xl mx-auto text-center">
+        <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-6">The StudioLive Experience</h2>
+        <p className="text-dim text-lg max-w-3xl mx-auto mb-16">
+          We don't just take pictures; we tell your story. Our unobtrusive approach ensures we capture genuine, candid emotions while you simply live in the moment.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="glass p-10 rounded-2xl reveal flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+              <Video className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold mb-3">Cinematic Films</h3>
+            <p className="text-dim">Breathtaking storytelling that looks like a Hollywood movie.</p>
+          </div>
+
+          <div className="glass p-10 rounded-2xl reveal flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+              <Camera className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold mb-3">Candid Moments</h3>
+            <p className="text-dim">Unscripted smiles, laughter, and tears preserved forever.</p>
+          </div>
+
+          <div className="glass p-10 rounded-2xl reveal flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+              <BookOpen className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold mb-3">Fine-Art Albums</h3>
+            <p className="text-dim">Premium Italian-crafted photobooks delivered to your door.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3D Ribbon Infinite Scrolling Marquee */}
+      <section className="py-16 md:py-20 border-y border-surface-light bg-surface/10 marquee-3d-viewport reveal">
+        <div className="text-center mb-8 md:mb-10">
+          <p className="text-xs md:text-sm font-bold tracking-[0.2em] text-dim uppercase">As Featured In & Trusted By</p>
+        </div>
+        <div className="marquee-3d-ribbon py-4 md:py-6 bg-primary text-white shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+          <div className="marquee-track flex gap-12 md:gap-24 items-center whitespace-nowrap">
+            {/* Set 1 */}
+            <span className="text-xl md:text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-lg md:text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-xl md:text-3xl font-serif italic">The Knot</span>
+            <span className="text-lg md:text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-xl md:text-3xl font-serif">ShaadiSaga</span>
+
+            {/* Set 2 */}
+            <span className="text-xl md:text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-lg md:text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-xl md:text-3xl font-serif italic">The Knot</span>
+            <span className="text-lg md:text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-xl md:text-3xl font-serif">ShaadiSaga</span>
+
+            {/* Set 3 */}
+            <span className="text-xl md:text-3xl font-serif font-bold tracking-tighter">VOGUE</span>
+            <span className="text-lg md:text-2xl font-sans font-extrabold tracking-widest">WedMeGood</span>
+            <span className="text-xl md:text-3xl font-serif italic">The Knot</span>
+            <span className="text-lg md:text-2xl font-sans font-bold uppercase tracking-widest">Harper's</span>
+            <span className="text-xl md:text-3xl font-serif">ShaadiSaga</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Editorial Grid Gallery with Holographic 3D Parallax */}
+      <section className="reveal-section min-h-screen flex flex-col justify-center bg-surface py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-4">Featured Love Stories</h2>
+            <p className="text-dim text-lg">A glimpse into the magical moments we've captured.</p>
+          </div>
+
+          {/* Perfectly Aligned 3D Grid container */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 reveal" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
+            <LoveStoryCard
+              img="/cat-wedding.png"
+              title="Riya & Vikram"
+              desc="Royal Jaipur Wedding"
+              onClick={() => onNavigate('events')}
+            />
+
+            <LoveStoryCard
+              img="/cat-prewedding.png"
+              title="Ananya & Rahul"
+              desc="Goa Pre-Wedding"
+              onClick={() => onNavigate('events')}
+            />
+
+            <LoveStoryCard
+              img="/cat-party.png"
+              title="Sangeet Night"
+              desc="Candid Expressions"
+              onClick={() => onNavigate('events')}
+            />
+
+            <LoveStoryCard
+              img="/our-story.png"
+              title="Pooja & Karan"
+              desc="Intimate Portraits"
+              onClick={() => onNavigate('events')}
+            />
+          </div>
+
+          <div className="text-center mt-16">
+            <button onClick={() => onNavigate('events')} className="btn-primary border-0 cursor-pointer">View Full Gallery</button>
+          </div>
+        </div>
+      </section>
+
+      {/* Words of Love (Testimonials) in Dynamic 3D with Organic Auto-Bobbing */}
+      <section className="reveal-section min-h-screen flex flex-col justify-center testimonials-section-3d py-32 px-6 max-w-7xl mx-auto text-center overflow-hidden">
+        <h2 className="text-editorial text-4xl md:text-5xl text-primary mb-20 reveal">Words of Love</h2>
+
+        {/* 3D Perspective container wrapper */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch"
+          style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}
+        >
+          <TestimonialCard
+            quote="&quot;StudioLive captured the soul of our wedding. We didn't even notice them half the time, yet they managed to photograph the most intimate, breathtaking candid moments.&quot;"
+            author="Neha & Siddharth"
+            location="Mumbai"
+            floatClass="float-3d-card-1"
+          />
+
+          <TestimonialCard
+            quote="&quot;The cinematic film made our entire family cry. It felt like watching a Hollywood movie of our own life. Absolute perfection from the team!&quot;"
+            author="Pooja & Karan"
+            location="Udaipur"
+            isPrimary={true}
+            floatClass="float-3d-card-2"
+          />
+
+          <TestimonialCard
+            quote="&quot;Their energy, professionalism, and eye for detail is unmatched. The Italian photobook they delivered is a piece of art that sits perfectly in our living room.&quot;"
+            author="Riya & Vikram"
+            location="Jaipur"
+            floatClass="float-3d-card-3"
+          />
+        </div>
+      </section>
+
+      {/* Massive Footer CTA */}
+      <section className="reveal-section min-h-screen flex flex-col justify-center bg-primary text-white py-32 px-6 text-center relative overflow-hidden reveal">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h2 className="text-editorial text-5xl md:text-6xl mb-6">Ready to tell your story?</h2>
+          <p className="text-xl text-white/80 mb-12">
+            We take a limited number of weddings each year to ensure the highest quality of work and personal attention to our couples.
           </p>
-          <h1 className="font-serif text-5xl md:text-8xl leading-[1.1] text-textLight mb-6">
-            Capturing Indian Weddings<br />& Cinematic Stories.
-          </h1>
-          <p className="text-textDim text-lg max-w-[600px] mb-10 leading-relaxed">
-            Breathtaking virtual production, candid photography, and fine art documentation tailored to celebrate your legacy.
-          </p>
-          <button 
-            onClick={() => onChangePage('book')}
-            className="btn-gold"
+          <button
+            onClick={() => onNavigate('contact')}
+            className="inline-block bg-white text-primary font-bold px-10 py-4 rounded-full text-lg hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-0 cursor-pointer"
           >
-            Begin Your Story <ArrowRight size={16} />
+            Check Our Availability
           </button>
         </div>
       </section>
-
-      {/* FEATURED LOVE STORIES */}
-      <section className="reveal-section reveal stories-sec-bg py-[120px] px-[5%] relative">
-        {/* Parallax Scaling background backplate */}
-        <div className="zoom-bg stories-bg" />
-        
-        <div className="reveal-content w-full flex flex-col relative z-10">
-          <div className="text-center mb-[80px] max-w-[1200px] mx-auto w-full">
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-goldPrimary mb-3">
-              Cinematic Highlights
-            </p>
-            <h2 className="font-serif text-4xl md:text-5xl text-textLight mb-6">
-              Featured Love Stories
-            </h2>
-            <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-saffronPrimary to-transparent mx-auto" />
-          </div>
-          
-          <div className="stories-grid grid grid-cols-3 gap-10 max-lg:grid-cols-2 max-md:grid-cols-1 max-w-[1200px] mx-auto w-full">
-            {stories.map((story, i) => (
-              <div 
-                key={i}
-                onClick={() => onChangePage('book')}
-                onMouseMove={handleCardMouseMove}
-                onMouseLeave={handleCardMouseLeave}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="bg-surfaceDark/65 border border-goldPrimary/12 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-goldPrimary/30 hover:shadow-[0_15px_40px_rgba(212,175,55,0.12)] group"
-              >
-                <div className="h-[260px] relative overflow-hidden pointer-events-none">
-                  <img 
-                    src={story.img} 
-                    alt={story.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-bgDark/95" />
-                  <span className="absolute top-5 left-5 bg-saffronPrimary/15 border border-saffronPrimary text-saffronPrimary py-1 px-3 rounded-xl text-[11px] font-semibold tracking-[0.1em] uppercase">
-                    {story.tag}
-                  </span>
-                </div>
-                <div className="p-[30px] pointer-events-none">
-                  <h3 className="font-serif text-2xl text-textLight mb-3">
-                    {story.title}
-                  </h3>
-                  <p className="text-textDim text-sm mb-5 leading-relaxed">
-                    {story.desc}
-                  </p>
-                  <div className="text-[12px] font-semibold uppercase text-goldPrimary flex items-center gap-1.5 tracking-[0.1em]">
-                    {story.linkText} {story.icon}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* MARQUEE BAND */}
-      <section className="pub-ribbon border-y border-goldPrimary/10 py-[60px] px-[5%] bg-surfaceDark/40 relative">
-        <p className="text-center text-xs font-semibold tracking-[0.25em] uppercase text-textDim mb-10">
-          As Featured In & Trusted By
-        </p>
-        <div className="flex justify-around items-center flex-wrap gap-10 max-w-[1200px] mx-auto opacity-60">
-          <div className="font-serif text-2xl font-bold tracking-[0.05em] text-textLight">VOGUE INDIA</div>
-          <div className="font-serif text-2xl font-bold tracking-[0.05em] text-textLight">WEDMEGOOD</div>
-          <div className="font-serif text-2xl font-bold tracking-[0.05em] text-textLight">THE KNOT</div>
-          <div className="font-serif text-2xl font-bold tracking-[0.05em] text-textLight">BRIDES OF INDIA</div>
-        </div>
-      </section>
-
-      {/* STUDIOLIVE EXPERIENCE */}
-      <section className="reveal-section reveal experience-sec-bg py-[120px] px-[5%] relative">
-        {/* Parallax Scaling background backplate */}
-        <div className="zoom-bg experience-bg" />
-        
-        <div className="reveal-content w-full relative z-10">
-          <div className="exp-row flex gap-[80px] max-lg:flex-col max-lg:gap-10 max-w-[1200px] mx-auto items-center justify-between">
-            
-            <div className="flex-1">
-              <p className="text-xs font-semibold tracking-[0.25em] uppercase text-goldPrimary mb-4">
-                The Art of Storytelling
-              </p>
-              <h2 className="font-serif text-4xl md:text-5xl mb-6 leading-[1.2] text-textLight">
-                The StudioLive<br />Experience
-              </h2>
-              <p className="text-textDim text-base mb-10 leading-relaxed">
-                We blend state-of-the-art virtual production, multi-camera cinematography, and unobtrusive fine-art photography to document your celebrations. We don't direct; we capture authentic emotions as they unfold naturally.
-              </p>
-              <div className="flex gap-10">
-                <div className="stat-item">
-                  <h4 className="font-serif text-4xl text-goldPrimary mb-1">350+</h4>
-                  <p className="text-xs uppercase tracking-[0.1em] text-textLight">Weddings Told</p>
-                </div>
-                <div className="stat-item">
-                  <h4 className="font-serif text-4xl text-goldPrimary mb-1">15+</h4>
-                  <p className="text-xs uppercase tracking-[0.1em] text-textLight">Global Awards</p>
-                </div>
-                <div className="stat-item">
-                  <h4 className="font-serif text-4xl text-goldPrimary mb-1">100%</h4>
-                  <p className="text-xs uppercase tracking-[0.1em] text-textLight">Candid Emotion</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex-1 grid grid-cols-2 gap-5 w-full">
-              {features.map((feat, i) => (
-                <div 
-                  key={i}
-                  onMouseMove={handleCardMouseMove}
-                  onMouseLeave={handleCardMouseLeave}
-                  style={{ transformStyle: 'preserve-3d' }}
-                  className="exp-box group"
-                >
-                  <div className="exp-box-icon pointer-events-none">
-                    {feat.icon}
-                  </div>
-                  <h3 className="exp-box-title pointer-events-none">
-                    {feat.title}
-                  </h3>
-                  <p className="exp-box-desc pointer-events-none">
-                    {feat.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS SECTION */}
-      <section className="reveal-section testimonials-sec py-[120px] px-[5%] bg-surfaceDark/30 relative">
-        <div className="reveal-content w-full flex flex-col">
-          <div className="text-center mb-[80px] max-w-[1200px] mx-auto w-full">
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-goldPrimary mb-3">
-              Words of Love
-            </p>
-            <h2 className="font-serif text-4xl md:text-5xl text-textLight mb-6">
-              Loved by Generations
-            </h2>
-            <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-saffronPrimary to-transparent mx-auto" />
-          </div>
-          
-          <div className="testi-card max-w-[800px] mx-auto bg-surfaceDark/65 border border-goldPrimary/12 backdrop-blur-md p-[60px] rounded-[30px] text-center relative w-full">
-            <div className="quote-icon font-serif text-[80px] text-goldPrimary opacity-15 absolute top-5 left-10 leading-none">“</div>
-            <p className="testi-quote font-serif text-2xl md:text-3xl italic leading-[1.5] mb-[30px] text-textLight">
-              "StudioLive turned our Jaipur wedding into a cinematic masterpiece. Looking at the gallery and videos, we were transported back to the sounds of the shehnai and the warmth of the palace. Absolutely elite craftsmanship!"
-            </p>
-            <div className="testi-author text-base font-semibold text-goldPrimary tracking-[0.1em] uppercase">
-              Aishwarya & Ritvik
-            </div>
-            <div className="testi-loc text-xs text-textDim mt-1">
-              Jaipur Royal Palace
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CALL TO ACTION (CTA) */}
-      <section className="reveal-section cta-sec cta-sec-bg py-[160px] px-[5%] text-center relative">
-        {/* Parallax Scaling background backplate */}
-        <div className="zoom-bg cta-bg" />
-        
-        <div className="reveal-content w-full relative z-10">
-          <div className="cta-wrap max-w-[800px] mx-auto flex flex-col items-center">
-            <h2 className="font-serif text-5xl md:text-6xl text-textLight mb-6 leading-tight">
-              Let's craft your heritage film together.
-            </h2>
-            <p className="text-textDim text-lg mb-10 max-w-[600px] leading-relaxed">
-              Our booking calendars fill up quickly. Secure your special dates with our national creative leads today.
-            </p>
-            <button 
-              onClick={() => onChangePage('book')}
-              className="btn-gold"
-            >
-              Check Availability <Calendar size={16} />
-            </button>
-          </div>
-        </div>
-      </section>
-
     </div>
   );
-};
+}

@@ -57,9 +57,20 @@ html.lenis {
 }
 
 @keyframes pulseAperture {
-  0% { transform: scale(0.9); opacity: 0.05; }
-  50% { transform: scale(1.05); opacity: 0.2; }
-  100% { transform: scale(0.9); opacity: 0.05; }
+  0% {
+    transform: scale(0.9);
+    opacity: 0.05;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.05;
+  }
 }
 
 /* Monospace Floating Coordinates Widget */
@@ -84,63 +95,23 @@ html.lenis {
 
 /* Photographic Wedding Backdrops with Deep Saffron & Gold Overlays */
 .hero-sec {
-  background: transparent;
-  overflow: hidden;
+  background: linear-gradient(rgba(7, 9, 14, 0.82), rgba(7, 9, 14, 0.9)),
+    url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(rgba(7, 9, 14, 0.55), rgba(7, 9, 14, 0.72)), 
-              url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
-  transform-origin: center center;
+.stories-sec-bg {
+  background: linear-gradient(rgba(7, 9, 14, 0.94), rgba(7, 9, 14, 0.94)),
+    url('https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
-.stories-sec-bg, .experience-sec-bg, .cta-sec-bg {
-  position: relative;
-  overflow: hidden;
-  background: transparent;
+.experience-sec-bg {
+  background: linear-gradient(rgba(7, 9, 14, 0.94), rgba(7, 9, 14, 0.94)),
+    url('https://images.unsplash.com/photo-1595878715977-2e8f8df6392e?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
-.stories-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(rgba(7, 9, 14, 0.78), rgba(7, 9, 14, 0.82)), 
-              url('https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
-  transform-origin: center center;
-  will-change: transform;
-}
-
-.experience-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(rgba(7, 9, 14, 0.8), rgba(7, 9, 14, 0.84)), 
-              url('https://images.unsplash.com/photo-1595878715977-2e8f8df6392e?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
-  transform-origin: center center;
-  will-change: transform;
-}
-
-.cta-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(rgba(7, 9, 14, 0.65), rgba(7, 9, 14, 0.78)), 
-              url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
-  transform-origin: center center;
-  will-change: transform;
-}
-
-.generic-cta-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(rgba(7, 9, 14, 0.72), rgba(7, 9, 14, 0.84)), 
-              url('https://images.unsplash.com/photo-1519225495810-7512c696af05?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
-  transform-origin: center center;
-  will-change: transform;
+.cta-sec-bg {
+  background: linear-gradient(rgba(7, 9, 14, 0.84), rgba(7, 9, 14, 0.9)),
+    url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1920&auto=format&fit=crop') no-repeat center center / cover;
 }
 
 /* Glassmorphism Buttons & Forms Base classes */
@@ -186,135 +157,68 @@ html.lenis {
   transition: width 0.3s ease;
 }
 
-.nav-links a.active::after, .nav-links a:hover::after {
+.nav-links a.active::after,
+.nav-links a:hover::after {
   width: 100%;
 }
 
-/* Cinematic celluloid moving film grain */
-.film-grain {
+/* Dual Fixed Stage Light rays */
+.stage-ray-left {
   position: fixed;
-  inset: 0;
-  z-index: 50;
-  pointer-events: none;
-  opacity: 0.055;
-  background-image: url('https://media.giphy.com/media/oEI8T98so5744/giphy.gif');
-  background-size: cover;
-}
-
-/* Glowing Projector Lens Beam gradient cone */
-.projection-beam-cone {
-  position: absolute;
-  top: 50%;
+  top: 0;
   left: 0;
-  width: 150%;
-  height: 200%;
-  background: radial-gradient(
-    ellipse at left center,
-    rgba(212, 175, 55, 0.16) 0%,
-    rgba(255, 126, 54, 0.05) 45%,
-    transparent 80%
-  );
-  transform: translateY(-50%);
-  clip-path: polygon(0 48%, 100% 0, 100% 100%, 0 52%);
-  filter: blur(25px);
-  pointer-events: none;
-  animation: beamFlicker 8s infinite alternate;
-}
-
-@keyframes beamFlicker {
-  0% { opacity: 0.88; }
-  25% { opacity: 0.94; }
-  50% { opacity: 0.84; }
-  75% { opacity: 0.98; }
-  100% { opacity: 0.90; }
-}
-
-/* Spinner anim for projector reels */
-@keyframes spinClockwise {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes spinCounterClockwise {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-.reel-spin-slow {
-  animation: spinClockwise 12s linear infinite;
-}
-
-.reel-spin-fast {
-  animation: spinCounterClockwise 8s linear infinite;
-}
-
-/* Projection Shutter Slide Carousel Flash tick */
-.carousel-flash {
-  position: fixed;
-  inset: 0;
-  z-index: 45;
-  background: white;
-  pointer-events: none;
-  opacity: 0;
-}
-
-/* Diagonal visual light masking for the projected screen */
-@media (min-width: 1024px) {
-  .projected-screen {
-    clip-path: polygon(0 48%, 100% 0, 100% 100%, 0 52%);
-    will-change: transform, clip-path;
-  }
-}
-
-/* Cinematic Spotlight Punch-Through Overlay with feathered margins */
-.spotlight-mask-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 25;
-  pointer-events: none;
-  background-color: rgba(7, 9, 14, 0.88); /* Beautiful near-black dark overlay */
-  -webkit-mask-image: radial-gradient(
-    circle var(--spotlight-radius, 320px) at var(--spotlight-x, 60%) var(--spotlight-y, 50%),
-    transparent 0%,
-    transparent 55%,
-    black 100%
-  );
-  mask-image: radial-gradient(
-    circle var(--spotlight-radius, 320px) at var(--spotlight-x, 60%) var(--spotlight-y, 50%),
-    transparent 0%,
-    transparent 55%,
-    black 100%
-  );
-  will-change: mask-image, -webkit-mask-image;
-}
-
-/* Glowing laser ray connecting projector lens to spotlight center */
-.projector-beam-ray {
-  position: fixed;
-  top: var(--ray-source-y, 50%);
-  left: var(--ray-source-x, 22%);
   height: 1px;
-  background: linear-gradient(to right, rgba(212, 175, 55, 0.75), rgba(255, 126, 54, 0.12) 80%, transparent);
+  background: linear-gradient(to right, rgba(212, 175, 55, 0.65), rgba(255, 126, 54, 0.08) 75%, transparent);
   transform-origin: left center;
   z-index: 24;
   pointer-events: none;
   filter: blur(1.5px);
-  width: var(--beam-ray-length, 0px);
-  transform: rotate(var(--beam-ray-angle, 0deg));
+  width: var(--beam-left-length, 0px);
+  transform: rotate(var(--beam-left-angle, 0deg));
   will-change: transform, width;
 }
 
-/* Outer spotlight halo border glow */
-.spotlight-halo {
+.stage-ray-right {
   position: fixed;
-  width: calc(var(--spotlight-radius, 320px) * 2);
-  height: calc(var(--spotlight-radius, 320px) * 2);
+  top: 0;
+  left: 100%; /* Originate from top-right corner! */
+  height: 1px;
+  background: linear-gradient(to right, rgba(212, 175, 55, 0.65), rgba(255, 126, 54, 0.08) 75%, transparent);
+  transform-origin: left center; /* Rotate standardly from left! */
+  z-index: 24;
+  pointer-events: none;
+  filter: blur(1.5px);
+  width: var(--beam-right-length, 0px);
+  transform: rotate(var(--beam-right-angle, 0deg));
+  will-change: transform, width;
+}
+
+/* Dual Spotlight glowing halo rings tracking the active section */
+.spotlight-halo-left {
+  position: fixed;
+  width: calc(var(--spotlight-radius, 300px) * 2);
+  height: calc(var(--spotlight-radius, 300px) * 2);
   top: 0;
   left: 0;
-  transform: translate(calc(var(--spotlight-x, 60%) - var(--spotlight-radius, 320px)), calc(var(--spotlight-y, 50%) - var(--spotlight-radius, 320px)));
+  transform: translate(calc(var(--spotlight-left-x, 35%) - var(--spotlight-radius, 300px)), calc(var(--spotlight-left-y, 50%) - var(--spotlight-radius, 300px)));
   border-radius: 50%;
-  box-shadow: 0 0 80px rgba(212, 175, 55, 0.22);
-  border: 1px solid rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 70px rgba(212, 175, 55, 0.16);
+  border: 1px solid rgba(212, 175, 55, 0.06);
+  z-index: 26;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.spotlight-halo-right {
+  position: fixed;
+  width: calc(var(--spotlight-radius, 300px) * 2);
+  height: calc(var(--spotlight-radius, 300px) * 2);
+  top: 0;
+  left: 0;
+  transform: translate(calc(var(--spotlight-right-x, 65%) - var(--spotlight-radius, 300px)), calc(var(--spotlight-right-y, 50%) - var(--spotlight-radius, 300px)));
+  border-radius: 50%;
+  box-shadow: 0 0 70px rgba(212, 175, 55, 0.16);
+  border: 1px solid rgba(212, 175, 55, 0.06);
   z-index: 26;
   pointer-events: none;
   will-change: transform;
