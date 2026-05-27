@@ -2,9 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 interface ThreeBackgroundProps {
+  // Target 3D camera coordinate coordinate state passed from the routing shell
   targetCameraPos: { x: number; y: number; z: number };
 }
 
+/**
+ * ThreeBackground Component
+ * Renders a high-performance 3D WebGL particle environment with floating wireframe geometries.
+ * Includes interactive mouse-drift camera parallax and real-time canvas resizing solvers.
+ */
 export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPos }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const targetPosRef = useRef(targetCameraPos);
@@ -27,21 +33,21 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
     const floatingMeshes: THREE.Mesh[] = [];
     let animationFrameId: number;
 
-    // 1. Scene & Fog
+    // 1. Scene & Fog Setup (Exponential fog creates depth blending)
     scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x07090E, 0.08);
 
-    // 2. Camera Setup
+    // 2. Perspective Camera Setup (60 deg FOV)
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(targetPosRef.current.x, targetPosRef.current.y, targetPosRef.current.z);
 
-    // 3. Renderer Setup
+    // 3. WebGL Renderer Setup with high-dpi device ratio clamping
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // 4. Lights
+    // 4. Directional Stage Lighting (Warm Gold vs Saffron crossfire colors)
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
 
@@ -61,10 +67,12 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
     const saffronColor = new THREE.Color(0xFF7E36);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
+      // Scattered coordinates inside a 35-unit box
       positions[i] = (Math.random() - 0.5) * 35;
       positions[i + 1] = (Math.random() - 0.5) * 35;
       positions[i + 2] = (Math.random() - 0.5) * 35;
 
+      // Dynamic color interpolation between Gold and Saffron
       const mixedColor = goldColor.clone().lerp(saffronColor, Math.random());
       colors[i] = mixedColor.r;
       colors[i + 1] = mixedColor.g;
@@ -74,6 +82,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
+    // Custom circular points material with additive blending for glowing flares
     const pMaterial = new THREE.PointsMaterial({
       size: 0.12,
       vertexColors: true,
@@ -86,7 +95,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
     particles = new THREE.Points(particleGeo, pMaterial);
     scene.add(particles);
 
-    // 6. Floating Drifting Icosahedrons
+    // 6. Floating Drifting Icosahedrons (creates physical structure in background)
     const meshGeometry = new THREE.IcosahedronGeometry(1.6, 0);
     const meshCount = 8;
 
@@ -106,6 +115,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
         (Math.random() - 0.5) * 15 - 5
       );
 
+      // Unique rotation speeds and floating coordinates for each mesh
       mesh.userData = {
         rotX: (Math.random() - 0.5) * 0.006,
         rotY: (Math.random() - 0.5) * 0.006,
@@ -118,8 +128,9 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
       floatingMeshes.push(mesh);
     }
 
-    // 7. Mouse and Resize Handlers
+    // 7. Mouse and Resize Event Listeners
     const handleMouseMove = (e: MouseEvent) => {
+      // Map mouse cursor pixels to normalized coordinates (-1 to +1)
       mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
@@ -141,17 +152,17 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
     window.addEventListener('mousemove', handleMouseMove as any);
     window.addEventListener('resize', handleResize);
 
-    // 8. Animation Loop
+    // 8. High-Performance Frame Loop
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      // Rotate particle cloud
+      // Subtle rotation of the global particle cloud
       if (particles) {
         particles.rotation.y += 0.0006;
         particles.rotation.x += 0.0003;
       }
 
-      // Drift wireframe meshes
+      // Rotate and float wireframe meshes
       floatingMeshes.forEach((mesh) => {
         mesh.rotation.x += mesh.userData.rotX;
         mesh.rotation.y += mesh.userData.rotY;
@@ -170,6 +181,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
       const scrollY = window.scrollY || document.documentElement.scrollTop;
       const scrollZoom = scrollY * 0.0085;
 
+      // Smooth 0.04 lerping for fluid cinematic camera glide transitions
       camera.position.x += (targetCamX - camera.position.x) * 0.04;
       camera.position.y += (targetCamY - camera.position.y) * 0.04;
       camera.position.z += (activeTarget.z + scrollZoom - camera.position.z) * 0.04;
@@ -181,7 +193,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ targetCameraPo
 
     animate();
 
-    // 9. Cleanup on Unmount
+    // 9. Cleanup on Component Unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove as any);

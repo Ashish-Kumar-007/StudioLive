@@ -30,7 +30,7 @@ export const Events: React.FC<EventsProps> = ({ onChangePage }) => {
       title: "Cinematic Films",
       desc: "Theatrical editing, bespoke scoring, and narrative-driven storytelling that encapsulates the heart of your heritage.",
       icon: <Film size={24} />,
-      img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600&auto=format&fit=crop"
+      img: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600&auto=format&fit=crop"
     }
   ];
 

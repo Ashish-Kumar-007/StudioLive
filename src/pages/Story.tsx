@@ -55,7 +55,7 @@ export const Story: React.FC<StoryProps> = ({ onChangePage }) => {
             </div>
             <div className="story-visual flex-[0.8] h-[480px] max-md:h-[300px] bg-surfaceDark/65 border border-goldPrimary/12 rounded-[30px] overflow-hidden w-full">
               <img 
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?q=80&w=600&auto=format&fit=crop" 
                 alt="Immersive setup" 
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
