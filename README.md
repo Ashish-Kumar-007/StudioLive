@@ -1,64 +1,36 @@
-# StudioLive Landing Page 🎥🚀
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-StudioLive is a premium, high-fidelity landing page designed for creative production agencies and photography studios. It serves as the marketing face for the StudioLive ecosystem, showcasing the platform's power as an **Executive Command Center**.
+## Getting Started
 
-## 🌑 Aesthetic: High-Contrast "Elite" Theme
-The website features a stark, professional **Black, White, and Red** color scheme.
-- **Background:** Pure Solid Black (#000000)
-- **Text:** High-Contrast White (#FFFFFF)
-- **Accents:** Impact Red (#FF0000)
+First, run the development server:
 
-## 🌟 Key Features
-
-*   **Executive Hero Section:** High-impact intro with high-fidelity dashboard mockups.
-*   **The Studio Pipeline:** A visual, step-by-step breakdown of the agency workflow:
-    *   **Capture:** High-value lead intake.
-    *   **Qualify:** Receptionist triage.
-    *   **Assign:** Smart staff distribution.
-    *   **Produce:** Real-time tracking.
-    *   **Deliver:** Secure asset handover.
-*   **Micro-Animations:** Smooth, scroll-triggered reveal animations using Intersection Observer.
-*   **Glassmorphism:** Premium semi-transparent navigation and cards with backdrop blur effects.
-*   **Roadmap:** Interactive timeline of upcoming features like AI Lead Scoring and Client Collaboration Portals.
-
-## 💻 Tech Stack
-
-*   **Framework:** [Vite](https://vitejs.dev/) (Vanilla TypeScript)
-*   **Styling:** Vanilla CSS (Modern CSS Variables + Flexbox/Grid)
-*   **Icons:** [Lucide](https://lucide.dev/)
-*   **Typography:** [Outfit](https://fonts.google.com/specimen/Outfit) (Google Fonts)
-
-## 🚀 Getting Started
-
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed.
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Ashish-Kumar-007/StudioLive.git
-   cd studio-live-webapp
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-## 📦 Building for Production
-
-To create an optimized production bundle:
 ```bash
-npm run build
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-The output will be in the `dist/` directory.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
----
-*Built with ❤️ for creative agencies everywhere.*
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
