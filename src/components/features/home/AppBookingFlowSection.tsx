@@ -18,12 +18,12 @@ const steps = [
   },
   {
     id: "addons",
-    title: "2. Make It Yours",
+    title: "3. Make It Yours",
     description: "Add a second shooter, drone footage, or extra hours with a simple tap. Instantly see how it updates your total.",
   },
   {
     id: "date",
-    title: "3. Lock in the Date",
+    title: "4. Lock in the Date",
     description: "Browse our live calendar to see our real-time availability and select the perfect time for your session.",
   },
   {
@@ -35,6 +35,11 @@ const steps = [
     id: "receipt",
     title: "6. You're All Set!",
     description: "Instantly receive your digital receipt, booking confirmation, and a direct line to your photographer.",
+  },
+  {
+    id: "dashboard",
+    title: "7. Your Studio Dashboard",
+    description: "The experience continues. Access your itinerary, download your digital gallery, and order prints—all from one unified dashboard.",
   }
 ];
 
@@ -56,11 +61,19 @@ export function AppBookingFlowSection() {
         <div className="w-full md:w-1/2 py-[10vh] md:py-[30vh]">
           <div className="mb-[20vh] md:mb-[50vh]">
              <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
-               Booking, <br/>beautifully simplified.
+               Your Photography Experience <br/><span className="text-primary italic">Doesn't End at Booking.</span>
              </h2>
-             <p className="text-xl text-white/50 font-light max-w-md">
-               Scroll to see exactly how you'll book your session using our custom platform.
+             <p className="text-xl text-white/50 font-light max-w-md mb-8">
+               We've completely reimagined how you interact with your photography studio. From booking your session to receiving your gallery, everything is connected.
              </p>
+             <div className="grid grid-cols-2 gap-4 text-sm font-semibold tracking-wider uppercase text-white/80">
+               {['Services', 'Bookings', 'Payments', 'Gallery'].map((item) => (
+                 <div key={item} className="flex items-center gap-3">
+                   <CheckCircle2 className="w-4 h-4 text-primary" />
+                   {item}
+                 </div>
+               ))}
+             </div>
           </div>
 
           <div className="space-y-[50vh] pb-[30vh]">
@@ -324,6 +337,46 @@ export function AppBookingFlowSection() {
                   <div className="w-full space-y-3 mt-auto">
                     <div className="w-full bg-primary text-black py-3 rounded-xl text-center font-bold text-sm">View Booking Details</div>
                     <div className="w-full bg-zinc-800 text-white py-3 rounded-xl text-center font-bold text-sm">Message Photographer</div>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeStep === "dashboard" && (
+                <motion.div key="s6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-zinc-950 p-6 flex flex-col pt-12 overflow-hidden">
+                  <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
+                    <div className="font-heading font-bold text-xl text-white">Dashboard</div>
+                    <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center">
+                       <span className="font-bold text-xs text-white">JD</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-6 flex-1 overflow-hidden">
+                    <div>
+                      <h4 className="text-xs text-white/50 uppercase tracking-widest mb-3">Upcoming Shoot</h4>
+                      <div className="bg-zinc-800/80 p-5 rounded-2xl border border-white/5 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-3 opacity-20"><Calendar className="w-12 h-12" /></div>
+                        <div className="font-heading font-bold text-lg text-white mb-1">Wedding Photography</div>
+                        <div className="text-primary text-sm font-semibold mb-4">25 Aug • 10:00 AM</div>
+                        <div className="flex items-center justify-between text-sm text-white/70">
+                          <span>Lead Photographer</span>
+                          <span className="flex items-center gap-1 text-green-400"><CheckCircle2 className="w-3 h-3"/> Confirmed</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-xs text-white/50 uppercase tracking-widest mb-3">Recent Gallery</h4>
+                      <div className="bg-zinc-800/80 p-4 rounded-2xl border border-white/5 flex gap-4 items-center">
+                        <div className="w-16 h-16 bg-zinc-700 rounded-lg overflow-hidden flex-shrink-0">
+                           <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80")' }} />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-bold text-white text-sm mb-1">Pre-Wedding Shoot</div>
+                          <div className="text-xs text-white/50 mb-2">450 High-Res Photos</div>
+                          <div className="text-xs font-bold text-primary">View Gallery →</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               )}

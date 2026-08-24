@@ -3,7 +3,6 @@ import { OrientationSection } from "@/components/features/home/OrientationSectio
 import { MeetStudioSection } from "@/components/features/home/MeetStudioSection";
 import { ServicesSection } from "@/components/features/ServicesSection";
 import { ProjectStoriesSection } from "@/components/features/home/ProjectStoriesSection";
-import { AppIntroSection } from "@/components/features/home/AppIntroSection";
 import { AppBenefitsSection } from "@/components/features/home/AppBenefitsSection";
 import { AppBookingFlowSection } from "@/components/features/home/AppBookingFlowSection";
 import { PackagesPreviewSection } from "@/components/features/home/PackagesPreviewSection";
@@ -65,12 +64,9 @@ export default function HomePage() {
       {/* 5. Our Projects */}
       <ProjectStoriesSection />
       
-      {/* 6. The App */}
-      <AppIntroSection />
-      
-      {/* 7 & 8. Why Use It? / App Flow */}
-      <AppBenefitsSection />
+      {/* 6 & 7. The App Flow & Benefits */}
       <AppBookingFlowSection />
+      <AppBenefitsSection />
       
       {/* 9 & 10. Packages & Builder */}
       <PackagesPreviewSection />
