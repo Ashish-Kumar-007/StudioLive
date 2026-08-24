@@ -10,20 +10,20 @@ export const metadata: Metadata = {
 const packages = [
   {
     name: "Essential",
-    price: "From $500",
+    price: "From ₹40,000",
     description: "Perfect for short sessions and portraits.",
     features: ["2 Hours Coverage", "50 Edited Photos", "Online Gallery", "1 Photographer"],
   },
   {
     name: "Premium",
-    price: "From $1,500",
+    price: "From ₹1,25,000",
     description: "Ideal for weddings and large events.",
     features: ["8 Hours Coverage", "300 Edited Photos", "Premium Album", "2 Photographers"],
     popular: true,
   },
   {
     name: "Ultimate",
-    price: "From $2,500",
+    price: "From ₹2,50,000",
     description: "Full coverage with cinematic videography.",
     features: ["Full Day Coverage", "Unlimited Photos", "Cinematic Video", "Drone Coverage"],
   }
