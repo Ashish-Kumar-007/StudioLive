@@ -11,6 +11,7 @@ export interface PortfolioProject {
   title: string;
   slug: string;
   serviceId: string;
+  category: string;
   date: string;
   location: string;
   description: string;
@@ -54,6 +55,7 @@ export const portfolio: PortfolioProject[] = [
     title: "A Royal Wedding at Taj Hotel",
     slug: "royal-wedding-taj",
     serviceId: "1",
+    category: "Wedding Photography",
     date: "2026-05-14",
     location: "City, Country",
     description: "A beautiful traditional wedding with modern candid moments.",
