@@ -73,7 +73,7 @@ export function ProjectStoriesSection() {
                     </p>
                     <div className="flex flex-wrap gap-4">
                       <Button variant="default" asChild>
-                        <Link href={`/services/${project.category.toLowerCase().replace(' ', '-')}`}>Explore Service</Link>
+                        <Link href={`/services/${(project.category || 'general').toLowerCase().replace(' ', '-')}`}>Explore Service</Link>
                       </Button>
                       <Button variant="outline" asChild>
                         <Link href="/packages">View Packages</Link>

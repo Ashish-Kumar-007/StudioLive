@@ -10,6 +10,7 @@ import { PackagesPreviewSection } from "@/components/features/home/PackagesPrevi
 import { TeamPreviewSection } from "@/components/features/home/TeamPreviewSection";
 import { GalleryShopPreviewSection } from "@/components/features/home/GalleryShopPreviewSection";
 import { HomeFAQSection } from "@/components/features/home/HomeFAQSection";
+import { AppDownloadBanner } from "@/components/features/home/AppDownloadBanner";
 import { FinalCTASection } from "@/components/features/home/FinalCTASection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
@@ -110,6 +111,9 @@ export default function HomePage() {
 
       {/* 15. FAQ */}
       <HomeFAQSection />
+      
+      {/* App Download Banner */}
+      <AppDownloadBanner />
       
       {/* 16. Final CTA */}
       <FinalCTASection />
