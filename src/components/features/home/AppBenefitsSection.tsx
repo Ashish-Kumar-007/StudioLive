@@ -44,7 +44,7 @@ export function AppBenefitsSection() {
               className="p-8 rounded-3xl bg-primary/5 border border-primary/20 relative"
             >
               <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-lg shadow-primary/20">
-                The StudioLive Way
+                The Instantly Way
               </div>
               <h4 className="text-lg font-bold mb-6 uppercase tracking-widest text-primary">Everything Connected</h4>
               <ul className="space-y-4 text-sm font-medium">

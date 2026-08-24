@@ -85,19 +85,19 @@
 }
 
 .dark {
-  --background: oklch(0.13 0 0); /* #0a0a0a */
-  --foreground: oklch(0.95 0 0); /* #f2f2f2 */
-  --card: oklch(0.18 0 0); /* slightly lighter than bg */
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.18 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.76 0.14 85); /* #d4af37 Gold */
-  --primary-foreground: oklch(0.13 0 0); /* Black text on Gold */
-  --secondary: oklch(0.25 0.02 85); /* Dark muted gold */
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.25 0.05 85); 
+  --background: oklch(0 0 0); /* Pure Black */
+  --foreground: oklch(0.98 0 0); /* Crisp White */
+  --card: oklch(0.1 0 0); /* Off-black */
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.1 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.8 0.1 80); /* Refined Champagne Gold */
+  --primary-foreground: oklch(0 0 0); /* Black text on Gold */
+  --secondary: oklch(0.2 0 0); 
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.15 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.15 0 0); 
   --accent-foreground: oklch(0.95 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);

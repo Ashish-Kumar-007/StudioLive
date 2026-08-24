@@ -23,9 +23,9 @@ export function AppIntroSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-2xl text-primary italic font-playfair mb-8"
+            className="text-2xl text-primary italic font-heading mb-8"
           >
-            Meet the StudioLive App.
+            Meet Instantly by StudioLive.
           </motion.h3>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -35,7 +35,7 @@ export function AppIntroSection() {
             className="text-xl text-white/70 font-light mb-10 leading-relaxed"
           >
             We've completely reimagined how you interact with your photography studio. 
-            From customizing your package to selecting your favorite final edits, everything is connected in one seamless digital experience.
+            From booking your session in a blink, to customizing your package and selecting your favorite edits—everything is connected in one seamless digital experience.
           </motion.p>
 
           <motion.div 

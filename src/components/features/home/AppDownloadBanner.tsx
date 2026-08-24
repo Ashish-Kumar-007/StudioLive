@@ -13,13 +13,13 @@ export function AppDownloadBanner() {
         <div className="text-primary-foreground max-w-xl text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-semibold tracking-wider uppercase mb-6 shadow-lg">
             <Smartphone className="w-4 h-4" />
-            Download the App
+            Get Instantly
           </div>
           <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
             Book your session in seconds.
           </h2>
           <p className="text-lg md:text-xl font-light text-primary-foreground/80 mb-8 leading-relaxed">
-            Get the StudioLive app for instant booking, live chat, and a seamless digital gallery experience. Use code <span className="font-bold bg-white/20 px-2 py-1 rounded">APP15</span> for 15% off your first booking.
+            Download <span className="font-semibold">Instantly by StudioLive</span> for rapid booking, live chat, and a seamless digital gallery experience. Use code <span className="font-bold bg-white/20 px-2 py-1 rounded">INSTA15</span> for 15% off your first booking.
           </p>
           
           <div className="flex flex-wrap gap-4 justify-center md:justify-start">
@@ -54,8 +54,8 @@ export function AppDownloadBanner() {
           className="relative w-64 md:w-80 aspect-[9/19] bg-zinc-950 rounded-[3rem] border-[8px] border-zinc-900 shadow-2xl flex flex-col justify-center items-center text-center p-6"
         >
           <div className="absolute top-4 left-1/2 -translate-x-1/2 w-1/3 h-6 bg-zinc-900 rounded-b-xl" />
-          <div className="font-heading text-3xl font-bold text-white mb-2">StudioLive</div>
-          <div className="text-primary text-sm font-semibold uppercase tracking-widest mb-8">Booking App</div>
+          <div className="font-heading text-4xl font-bold text-white mb-1 italic">Instantly</div>
+          <div className="text-primary text-[10px] font-semibold uppercase tracking-widest mb-8">by StudioLive</div>
           <div className="w-full h-12 rounded-full bg-white/10 animate-pulse mb-4" />
           <div className="w-3/4 h-8 rounded-full bg-white/10 animate-pulse" />
         </motion.div>
