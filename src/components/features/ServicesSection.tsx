@@ -33,7 +33,7 @@ export function ServicesSection() {
             transition={{ duration: 0.8 }}
             className="font-playfair text-4xl md:text-5xl font-bold mb-4"
           >
-            The Art of Observation
+            What would you like us to capture?
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -42,7 +42,7 @@ export function ServicesSection() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto"
           >
-            Tailored photography experiences designed to capture the unique essence of your moments.
+            Find the experience that fits your story.
           </motion.p>
         </div>
 
