@@ -2,94 +2,71 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { portfolio } from "@/lib/mock-data";
 
 export function ProjectStoriesSection() {
-  const featuredProjects = portfolio.slice(0, 3);
+  const featuredProjects = portfolio.slice(0, 7);
 
   return (
-    <section className="py-32 px-4 bg-muted/20 border-t border-white/5 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24">
+    <section className="py-32 px-4 bg-zinc-950 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="font-playfair text-4xl md:text-5xl font-bold mb-6"
-          >
-            See What We Create
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+            className="font-heading text-4xl md:text-5xl font-bold mb-6 text-white"
           >
-            A celebration captured through candid moments, portraits, and cinematic details.
-          </motion.p>
+            Featured Stories
+          </motion.h2>
         </div>
 
-        <div className="space-y-32">
-          {featuredProjects.map((project, idx) => (
-            <motion.div 
-              key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className={`flex flex-col gap-12 ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center`}
-            >
-              {/* Image Side */}
-              <div className="w-full lg:w-3/5 group">
-                <Link href={`/portfolio/${project.slug}`}>
-                  <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 group-hover:border-primary/50 transition-colors duration-500">
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${project.images[0] || '/mock-images/p1-1.jpg'})` }}
-                    />
-                  </div>
-                </Link>
-              </div>
-
-              {/* Text Side (Project -> Service Connection) */}
-              <div className="w-full lg:w-2/5 flex flex-col justify-center px-4 lg:px-12">
-                <div className="text-primary text-sm font-bold tracking-widest uppercase mb-4">
-                  {project.category}
-                </div>
-                <h3 className="font-playfair text-4xl font-bold mb-6">
-                  {project.title}
-                </h3>
-                <p className="text-xl text-muted-foreground font-light mb-8 leading-relaxed">
-                  {project.description || "A celebration captured through candid moments, portraits, and cinematic details."}
-                </p>
+        <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[300px] gap-6 grid-flow-dense">
+          {featuredProjects.map((project, idx) => {
+            const spanPatterns = [
+              "md:col-span-2 md:row-span-2",
+              "md:col-span-2 md:row-span-1",
+              "md:col-span-1 md:row-span-2",
+              "md:col-span-1 md:row-span-1",
+              "md:col-span-1 md:row-span-1",
+              "md:col-span-2 md:row-span-1",
+              "md:col-span-1 md:row-span-2"
+            ];
+            const spanClass = spanPatterns[idx % spanPatterns.length];
+            
+            return (
+              <motion.div 
+                key={project.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                className={`group rounded-[2rem] border border-white/5 bg-zinc-900 relative overflow-hidden flex flex-col justify-end ${spanClass}`}
+              >
+                <Link href={`/portfolio/${project.slug}`} className="absolute inset-0 z-20" />
                 
-                <div className="flex flex-col gap-6 mt-4">
-                  <div className="p-6 bg-card border border-white/5 rounded-2xl">
-                    <h4 className="text-lg font-bold mb-2">Want something like this?</h4>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      This project was created using our {project.category} packages.
-                    </p>
-                    <div className="flex flex-wrap gap-4">
-                      <Button variant="default" asChild>
-                        <Link href={`/services/${(project.category || 'general').toLowerCase().replace(' ', '-')}`}>Explore Service</Link>
-                      </Button>
-                      <Button variant="outline" asChild>
-                        <Link href="/packages">View Packages</Link>
-                      </Button>
-                    </div>
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                  style={{ backgroundImage: `url(${project.images[0]})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
+                
+                <div className="relative z-10 p-6 md:p-10 transition-transform duration-500 group-hover:-translate-y-2">
+                  <div className="text-primary text-[10px] font-bold tracking-widest uppercase mb-2 drop-shadow-md">
+                    {project.category}
                   </div>
+                  <h3 className="font-heading text-2xl md:text-3xl font-bold text-white mb-2 drop-shadow-lg leading-tight">
+                    {project.title}
+                  </h3>
+                  {idx !== 2 && ( // Hide description on the smallest tile to keep it clean
+                    <p className="text-white/70 text-sm font-light line-clamp-2">
+                      {project.description}
+                    </p>
+                  )}
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        
-        <div className="text-center mt-32">
-           <Button size="lg" variant="link" className="text-xl text-primary" asChild>
-             <Link href="/portfolio">View All Stories →</Link>
-           </Button>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

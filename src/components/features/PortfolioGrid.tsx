@@ -28,39 +28,49 @@ export function PortfolioGrid() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
+        className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[300px] gap-6 max-w-6xl mx-auto grid-flow-dense"
       >
         {portfolio.map((project, index) => {
-          // Create an asymmetric grid feel by varying aspect ratios based on index
-          const isTall = index % 3 === 0;
+          // Asymmetric mapping that loops nicely for any number of items
+          const spanPatterns = [
+            "md:col-span-2 md:row-span-2", // Large square
+            "md:col-span-2 md:row-span-1", // Wide rectangle
+            "md:col-span-1 md:row-span-2", // Tall rectangle
+            "md:col-span-1 md:row-span-1", // Small square
+            "md:col-span-2 md:row-span-2", // Large square
+            "md:col-span-1 md:row-span-1", // Small square
+            "md:col-span-1 md:row-span-1", // Small square
+            "md:col-span-2 md:row-span-1", // Wide rectangle
+          ];
+          const spanClass = spanPatterns[index % spanPatterns.length];
+          
           return (
-            <motion.div key={project.id} variants={itemVariants}>
-              <Link href={`/portfolio/${project.slug}`} className="group block h-full">
-                <div className="relative overflow-hidden rounded-xl bg-card border border-white/5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 h-full flex flex-col">
-                  
-                  <div className={`relative w-full overflow-hidden ${isTall ? 'aspect-[3/4]' : 'aspect-square'}`}>
-                    <div 
-                      className="absolute inset-0 bg-muted bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${project.images[0] || '/mock-images/p1-1.jpg'})` }}
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                      <span className="text-white border border-white/50 backdrop-blur-sm px-6 py-2 rounded-full font-medium tracking-wide">
-                        View Story
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6 md:p-8 flex-1 flex flex-col justify-center">
-                    <h2 className="font-playfair text-2xl md:text-3xl font-bold mb-3 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h2>
-                    <div className="flex justify-between items-center text-sm text-muted-foreground uppercase tracking-wider font-semibold">
-                      <span>{project.location}</span>
-                      <span className="text-primary">{new Date(project.date).getFullYear()}</span>
-                    </div>
-                  </div>
+            <motion.div 
+              key={project.id} 
+              variants={itemVariants}
+              className={`group rounded-[2rem] border border-white/5 bg-zinc-900 relative overflow-hidden flex flex-col justify-end ${spanClass}`}
+            >
+              <Link href={`/portfolio/${project.slug}`} className="absolute inset-0 z-20" />
+              
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                style={{ backgroundImage: `url(${project.images[0]})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
+              
+              <div className="relative z-10 p-6 md:p-10 transition-transform duration-500 group-hover:-translate-y-2">
+                <div className="text-primary text-[10px] font-bold tracking-widest uppercase mb-2 drop-shadow-md">
+                  {project.category}
                 </div>
-              </Link>
+                <h3 className="font-heading text-2xl md:text-3xl font-bold text-white mb-2 drop-shadow-lg leading-tight">
+                  {project.title}
+                </h3>
+                {index !== 3 && (
+                  <p className="text-white/70 text-sm font-light line-clamp-2">
+                    {project.description}
+                  </p>
+                )}
+              </div>
             </motion.div>
           );
         })}
