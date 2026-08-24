@@ -2,13 +2,18 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, ChevronRight, Play, Sparkles, Calendar, CreditCard, Apple } from "lucide-react";
+import { CheckCircle2, ChevronRight, Play, Sparkles, Calendar, CreditCard, Apple, Search, ShoppingBag, Receipt, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const steps = [
   {
+    id: "home",
+    title: "1. Discover Everything",
+    description: "Explore all our services, read reviews, and browse physical prints and albums directly from the home screen.",
+  },
+  {
     id: "package",
-    title: "1. Choose Your Story",
+    title: "2. Choose Your Story",
     description: "Start by selecting the photography package that fits your needs. See clear, upfront pricing with no hidden fees.",
   },
   {
@@ -23,13 +28,18 @@ const steps = [
   },
   {
     id: "checkout",
-    title: "4. Secure Your Spot",
+    title: "5. Secure Your Spot",
     description: "Confirm your booking with a secure deposit using Apple Pay, Google Pay, or any major credit card.",
+  },
+  {
+    id: "receipt",
+    title: "6. You're All Set!",
+    description: "Instantly receive your digital receipt, booking confirmation, and a direct line to your photographer.",
   }
 ];
 
 export function AppBookingFlowSection() {
-  const [activeStep, setActiveStep] = useState<string>("package");
+  const [activeStep, setActiveStep] = useState<string>("home");
 
   return (
     <section className="bg-zinc-950 border-y border-white/5 relative">
@@ -80,6 +90,68 @@ export function AppBookingFlowSection() {
             
             {/* Dynamic App Screens */}
             <AnimatePresence mode="wait">
+
+              {activeStep === "home" && (
+                <motion.div key="s0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-zinc-950 flex flex-col overflow-hidden">
+                  
+                  {/* Instamart-style Header */}
+                  <div className="bg-zinc-900 pt-12 pb-4 px-4 shadow-md z-10">
+                    <div className="flex justify-between items-center mb-4">
+                      <div>
+                        <div className="text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
+                           <span>Book Instantly</span> <ChevronRight className="w-3 h-3" />
+                        </div>
+                        <div className="text-white text-xs font-bold truncate">Delhi, India</div>
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <span className="font-heading font-bold text-primary italic text-xs">IS</span>
+                      </div>
+                    </div>
+                    
+                    {/* Search Bar */}
+                    <div className="bg-zinc-950 border border-white/10 rounded-xl p-3 flex items-center gap-3">
+                      <Search className="w-4 h-4 text-white/50" />
+                      <div className="text-xs text-white/50">Search "Pre-Wedding Shoot"...</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 overflow-hidden p-4 space-y-6">
+                    {/* Blinkit-style Banner Carousel */}
+                    <div className="w-full bg-gradient-to-r from-primary/20 to-primary/5 border border-primary/20 rounded-xl p-4 flex items-center justify-between">
+                      <div>
+                        <div className="text-[10px] text-primary uppercase font-bold tracking-widest mb-1">Monsoon Offer</div>
+                        <div className="text-white font-bold text-sm leading-tight">20% OFF on<br/>Couples Shoots</div>
+                      </div>
+                      <div className="bg-primary text-black text-[10px] font-bold px-3 py-1 rounded-full">Book</div>
+                    </div>
+
+                    {/* Quick-Commerce Grid */}
+                    <div>
+                      <div className="text-xs font-bold text-white mb-3">Explore Categories</div>
+                      <div className="grid grid-cols-4 gap-2">
+                        {[
+                          { name: "Weddings", icon: "💍", color: "bg-pink-500/10 border-pink-500/20" },
+                          { name: "Portraits", icon: "👤", color: "bg-blue-500/10 border-blue-500/20" },
+                          { name: "Pre-Wed", icon: "👩‍❤️‍👨", color: "bg-purple-500/10 border-purple-500/20" },
+                          { name: "Events", icon: "🎉", color: "bg-yellow-500/10 border-yellow-500/20" },
+                          { name: "Drone", icon: "🚁", color: "bg-zinc-800 border-white/5" },
+                          { name: "Video", icon: "🎥", color: "bg-zinc-800 border-white/5" },
+                          { name: "Albums", icon: "📔", color: "bg-zinc-800 border-white/5" },
+                          { name: "Prints", icon: "🖼️", color: "bg-zinc-800 border-white/5" }
+                        ].map(cat => (
+                          <div key={cat.name} className="flex flex-col items-center gap-1">
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${cat.color} text-lg shadow-sm`}>
+                              {cat.icon}
+                            </div>
+                            <div className="text-[9px] text-white/80 font-medium">{cat.name}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
+                </motion.div>
+              )}
               
               {activeStep === "package" && (
                 <motion.div key="s1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-zinc-900/50 p-6 flex flex-col pt-12">
@@ -220,7 +292,38 @@ export function AppBookingFlowSection() {
                     </div>
                   </div>
                   <div className="mt-auto">
-                    <div className="w-full bg-primary text-black py-3 rounded-xl text-center font-bold text-sm">Confirm Booking</div>
+                    <div className="w-full bg-primary text-black py-3 rounded-xl text-center font-bold text-sm flex justify-center items-center gap-2">
+                       <Apple className="w-4 h-4" /> Pay ₹80,000
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeStep === "receipt" && (
+                <motion.div key="s5" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-zinc-900/50 p-6 flex flex-col pt-12 items-center text-center">
+                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-6 mt-8">
+                    <CheckCircle2 className="w-8 h-8 text-green-400" />
+                  </div>
+                  <div className="text-2xl font-heading font-bold text-white mb-2">Payment Received!</div>
+                  <div className="text-sm text-white/50 mb-8">Your booking is confirmed.</div>
+                  
+                  <div className="w-full bg-zinc-800/80 border border-white/10 rounded-2xl p-5 mb-6 text-left relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-3 opacity-10"><Receipt className="w-16 h-16" /></div>
+                    <div className="text-xs text-white/50 uppercase tracking-widest mb-1">Receipt #</div>
+                    <div className="font-mono text-white text-sm mb-4">TXN-9482740</div>
+                    
+                    <div className="flex justify-between items-end">
+                      <div>
+                        <div className="text-xs text-white/50 mb-1">Amount Paid</div>
+                        <div className="font-bold text-white text-xl">₹80,000</div>
+                      </div>
+                      <div className="text-xs text-green-400 font-bold bg-green-400/10 px-2 py-1 rounded">SUCCESS</div>
+                    </div>
+                  </div>
+                  
+                  <div className="w-full space-y-3 mt-auto">
+                    <div className="w-full bg-primary text-black py-3 rounded-xl text-center font-bold text-sm">View Booking Details</div>
+                    <div className="w-full bg-zinc-800 text-white py-3 rounded-xl text-center font-bold text-sm">Message Photographer</div>
                   </div>
                 </motion.div>
               )}
