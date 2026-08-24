@@ -5,7 +5,7 @@ import { ServicesSection } from "@/components/features/ServicesSection";
 import { ProjectStoriesSection } from "@/components/features/home/ProjectStoriesSection";
 import { AppIntroSection } from "@/components/features/home/AppIntroSection";
 import { AppBenefitsSection } from "@/components/features/home/AppBenefitsSection";
-import { EcosystemTimelineSection } from "@/components/features/home/EcosystemTimelineSection";
+import { AppBookingFlowSection } from "@/components/features/home/AppBookingFlowSection";
 import { PackagesPreviewSection } from "@/components/features/home/PackagesPreviewSection";
 import { TeamPreviewSection } from "@/components/features/home/TeamPreviewSection";
 import { GalleryShopPreviewSection } from "@/components/features/home/GalleryShopPreviewSection";
@@ -68,9 +68,9 @@ export default function HomePage() {
       {/* 6. The App */}
       <AppIntroSection />
       
-      {/* 7 & 8. Why Use It? / How it Works */}
+      {/* 7 & 8. Why Use It? / App Flow */}
       <AppBenefitsSection />
-      <EcosystemTimelineSection />
+      <AppBookingFlowSection />
       
       {/* 9 & 10. Packages & Builder */}
       <PackagesPreviewSection />
